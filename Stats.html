@@ -216,6 +216,10 @@
       <div class="nav-icon">🌐</div>
       <div>資源</div>
     </a>
+    <a href="save.html" class="nav-item">
+      <div class="nav-icon">💾</div>
+      <div>儲存</div>
+    </a>
     <a href="Community.html" class="nav-item">
       <div class="nav-icon">👥</div>
       <div>社區</div>
@@ -233,27 +237,14 @@
       datasets: [{
         label: '平均分數 (1-10)',
         data: [8.2, 7.1, 5.8, 6.5, 5.2],
-        backgroundColor: [
-          '#4ECDC4',
-          '#4ECDC4',
-          '#FF6B6B',
-          '#4ECDC4',
-          '#FF6B6B'
-        ],
+        backgroundColor: ['#4ECDC4', '#4ECDC4', '#FF6B6B', '#4ECDC4', '#FF6B6B'],
         borderRadius: 8
       }]
     },
     options: {
       responsive: true,
-      plugins: {
-        legend: { display: false }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          max: 10
-        }
-      }
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, max: 10 } }
     }
   });
 
@@ -271,9 +262,7 @@
     },
     options: {
       responsive: true,
-      plugins: {
-        legend: { display: false }
-      }
+      plugins: { legend: { display: false } }
     }
   });
 </script>

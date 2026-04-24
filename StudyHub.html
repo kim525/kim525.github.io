@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>資源 — 學習中心</title>
+  <title> IoT 學習中心 — K‑City</title>
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   
@@ -36,11 +36,8 @@
       background: white;
       min-height: 100vh;
       box-shadow: 0 0 20px rgba(0,0,0,0.08);
-      position: relative;
-      overflow-x: hidden;
     }
     
-    /* Header / Search */
     .page-header {
       background: linear-gradient(135deg, var(--primary-color), #ff8e8e);
       color: white;
@@ -76,7 +73,6 @@
       margin-right: 12px;
     }
     
-    /* Category Tabs (similar to vocab) */
     .category-tabs {
       display: flex;
       overflow-x: auto;
@@ -106,7 +102,6 @@
       border-color: var(--primary-color);
     }
     
-    /* Resource Cards */
     .resources-list {
       padding: 20px 24px;
     }
@@ -175,7 +170,6 @@
       margin-right: 6px;
     }
     
-    /* Contribute Section */
     .contribute-section {
       margin: 32px 24px;
       padding: 24px;
@@ -190,7 +184,20 @@
       color: #1565c0;
     }
     
-    /* Bottom Nav */
+    .page-footer {
+      background: var(--dark-color);
+      color: white;
+      padding: 40px 24px 100px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    
+    .footer-content p {
+      margin: 8px 0;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+    
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -205,21 +212,6 @@
       border-top: 1px solid var(--gray-color);
       box-shadow: 0 -4px 16px rgba(0,0,0,0.07);
       z-index: 100;
-    }
-    
-    /* Footer */
-    .page-footer {
-      background: var(--dark-color);
-      color: white;
-      padding: 40px 24px 100px; /* Extra bottom padding to account for fixed nav */
-      text-align: center;
-      margin-top: 40px;
-    }
-    
-    .footer-content p {
-      margin: 8px 0;
-      font-size: 0.9rem;
-      opacity: 0.8;
     }
     
     .nav-item {
@@ -246,7 +238,6 @@
 
 <div class="mobile-container">
 
-  <!-- Header + Search -->
   <header class="page-header">
     <h1>學習中心</h1>
     
@@ -256,12 +247,10 @@
     </div>
   </header>
 
-  <!-- Category Tabs -->
   <div class="category-tabs">
     <button class="tab-btn active">全部</button>
   </div>
 
-  <!-- Resources List -->
   <section class="resources-list">
 
     <div class="resource-card">
@@ -270,7 +259,7 @@
       <div class="resource-desc">免費韓文課程，由字母到中高級文法 + 單字 + 聽力練習，結構清晰適合自學</div>
       <div class="card-actions">
         <a href="https://www.howtostudykorean.com" target="_blank" class="action-btn"><i class="fas fa-external-link-alt"></i> 前往</a>
-        <button class="action-btn primary"><i class="fas fa-bookmark"></i> 儲存到我的資源</button>
+        <button class="action-btn primary"><i class="fas fa-bookmark"></i> 儲存</button>
       </div>
     </div>
 
@@ -280,7 +269,7 @@
       <div class="resource-desc">經典免費韓文課程播放清單，從發音到日常對話，附講義下載</div>
       <div class="card-actions">
         <a href="https://www.youtube.com/playlist?list=PL5E4E9D9E5E5E5E5E" target="_blank" class="action-btn"><i class="fas fa-play"></i> 觀看</a>
-        <button class="action-btn primary"><i class="fas fa-bookmark"></i> 儲存到我的資源</button>
+        <button class="action-btn primary"><i class="fas fa-bookmark"></i> 儲存</button>
       </div>
     </div>
 
@@ -290,7 +279,7 @@
       <div class="resource-desc">韓國街頭真人口語短片，超適合練聽力 + 學自然表達</div>
       <div class="card-actions">
         <a href="https://www.youtube.com/c/EasyKorean" target="_blank" class="action-btn"><i class="fas fa-external-link-alt"></i> 前往頻道</a>
-        <button class="action-btn primary"><i class="fas fa-bookmark"></i> 儲存到我的資源</button>
+        <button class="action-btn primary"><i class="fas fa-bookmark"></i> 儲存</button>
       </div>
     </div>
 
@@ -300,7 +289,7 @@
       <div class="resource-desc">韓國政府官方免費韓文課程，可線上看 + 下載講義，適合各級別</div>
       <div class="card-actions">
         <a href="https://nuri.iksi.or.kr" target="_blank" class="action-btn"><i class="fas fa-external-link-alt"></i> 前往</a>
-        <button class="action-btn primary"><i class="fas fa-bookmark"></i> 儲存到我的資源</button>
+        <button class="action-btn primary"><i class="fas fa-bookmark"></i> 儲存</button>
       </div>
     </div>
 
@@ -310,13 +299,12 @@
       <div class="resource-desc">可愛又實用的韓文短片 + 播放清單，適合零碎時間學習</div>
       <div class="card-actions">
         <a href="https://www.youtube.com/c/KoreanUnnie" target="_blank" class="action-btn"><i class="fas fa-play"></i> 觀看</a>
-        <button class="action-btn primary"><i class="fas fa-bookmark"></i> 儲存到我的資源</button>
+        <button class="action-btn primary"><i class="fas fa-bookmark"></i> 儲存</button>
       </div>
     </div>
 
   </section>
 
-  <!-- Contribute Section -->
   <div class="contribute-section">
     <h3>想學更多？</h3>
     <p>探索 YouTube 上的韓文學習影片，繼續提升你的韓文！</p>
@@ -324,14 +312,14 @@
       <i class="fas fa-play"></i> 韓文學習影片
     </a>
   </div>
-  <!-- Footer -->
+
   <footer class="page-footer">
     <div class="footer-content">
       <p>&copy; 2026 K-City. All rights reserved.</p>
       <p>Learn Korean through building your virtual Seoul!</p>
     </div>
   </footer>
-  <!-- Bottom Navigation -->
+
   <nav class="bottom-nav">
     <a href="index.html" class="nav-item">
       <div class="nav-icon">🏠</div>
@@ -353,6 +341,10 @@
       <div class="nav-icon">🌐</div>
       <div>資源</div>
     </a>
+    <a href="save.html" class="nav-item">
+      <div class="nav-icon">💾</div>
+      <div>儲存</div>
+    </a>
     <a href="Community.html" class="nav-item">
       <div class="nav-icon">👥</div>
       <div>社區</div>
@@ -362,26 +354,10 @@
 </div>
 
 <script>
-  // Handle save to resources button clicks
-  document.addEventListener('DOMContentLoaded', function() {
-    const saveButtons = document.querySelectorAll('.action-btn.primary');
-    
-    saveButtons.forEach(button => {
-      if (button.textContent.includes('儲存到我的資源')) {
-        button.addEventListener('click', function() {
-          // Change button text to show checkmark
-          this.innerHTML = '<i class="fas fa-check"></i> ✅ 已儲存';
-          this.style.background = '#4caf50'; // Green color for saved state
-          this.disabled = true; // Prevent multiple clicks
-          
-          // Optional: Reset after 3 seconds
-          setTimeout(() => {
-            this.innerHTML = '<i class="fas fa-bookmark"></i> 儲存到我的資源';
-            this.style.background = ''; // Reset to original color
-            this.disabled = false;
-          }, 3000);
-        });
-      }
+  document.querySelectorAll('.action-btn.primary').forEach(button => {
+    button.addEventListener('click', function() {
+      this.innerHTML = '<i class="fas fa-check"></i> ✅ 已儲存';
+      this.style.background = '#4caf50';
     });
   });
 </script>

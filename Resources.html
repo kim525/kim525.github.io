@@ -36,11 +36,8 @@
       background: white;
       min-height: 100vh;
       box-shadow: 0 0 20px rgba(0,0,0,0.08);
-      position: relative;
-      overflow-x: hidden;
     }
     
-    /* Header + Search */
     .page-header {
       background: linear-gradient(135deg, var(--primary-color), #ff8e8e);
       color: white;
@@ -76,7 +73,6 @@
       margin-right: 12px;
     }
     
-    /* Category Tabs */
     .category-tabs {
       display: flex;
       overflow-x: auto;
@@ -106,7 +102,6 @@
       border-color: var(--primary-color);
     }
     
-    /* Resource Cards */
     .resources-list {
       padding: 20px 24px;
     }
@@ -177,7 +172,6 @@
       margin-right: 6px;
     }
     
-    /* Contribute */
     .contribute-section {
       margin: 32px 24px 80px;
       padding: 24px;
@@ -192,7 +186,6 @@
       color: #1565c0;
     }
     
-    /* Bottom Nav */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -233,7 +226,6 @@
 
 <div class="mobile-container">
 
-  <!-- Header -->
   <header class="page-header">
     <h1>資源中心</h1>
     
@@ -243,19 +235,16 @@
     </div>
   </header>
 
-  <!-- Tabs -->
   <div class="category-tabs">
     <button class="tab-btn active">全部</button>
   </div>
 
-  <!-- Resources -->
   <section class="resources-list">
 
-    <!-- Website example from doc -->
     <div class="resource-card">
       <div class="resource-type">網站</div>
       <div class="resource-title">韓文數字 1-10</div>
-      <div class="resource-desc">基礎韓文數字學習資源，適合初學者快速掌握 1–10 讀法與寫法（來自你的資源中心文件）</div>
+      <div class="resource-desc">基礎韓文數字學習資源，適合初學者快速掌握 1–10 讀法與寫法</div>
       <div class="card-actions">
         <a href="https://poe.com/preview/nl45bk8YQGiKN1lw5DBH" target="_blank" class="action-btn">
           <i class="fas fa-external-link-alt"></i> 前往
@@ -264,11 +253,10 @@
       </div>
     </div>
 
-    <!-- Playlist from doc -->
     <div class="resource-card">
       <div class="resource-type">播放清單</div>
       <div class="resource-title">Korean Learning 系列</div>
-      <div class="resource-desc">實用韓文學習播放清單，涵蓋發音、文法、日常對話等內容（來自你的資源 hub）</div>
+      <div class="resource-desc">實用韓文學習播放清單，涵蓋發音、文法、日常對話等內容</div>
       <div class="card-actions">
         <a href="https://youtube.com/playlist?list=PLhvzqO44iPnkD8JyNA7QEeeklhRyz3wIW" target="_blank" class="action-btn">
           <i class="fas fa-play-circle"></i> 觀看播放清單
@@ -277,11 +265,10 @@
       </div>
     </div>
 
-    <!-- Short video from doc -->
     <div class="resource-card">
       <div class="resource-type">短片</div>
       <div class="resource-title">學習韓文「사과」(sa-gwa)</div>
-      <div class="resource-desc">短片教「사과」的發音、意思（蘋果 / 道歉雙關）、例句「사과를 좋아해요」（我喜歡蘋果）。幽默風格，適合快速記單字！</div>
+      <div class="resource-desc">短片教「사과」的發音、意思（蘋果 / 道歉雙關）、例句</div>
       <div class="card-actions">
         <a href="https://youtube.com/shorts/0C-GZMtuIa4?si=UZ7KJy5xKa8-NISp" target="_blank" class="action-btn">
           <i class="fas fa-video"></i> 觀看短片
@@ -290,14 +277,37 @@
       </div>
     </div>
 
-    <!-- Poster preview placeholder -->
     <div class="resource-card">
-      <div class="resource-type">海報 / 概念圖</div>
-      <div class="resource-title">韓語學習 App 海報</div>
-      <div class="resource-desc">App 宣傳海報，展示核心功能與 IoT 特色（來自你的資源文件）</div>
+      <div class="resource-type">網站</div>
+      <div class="resource-title">HowtostudyKorean.com</div>
+      <div class="resource-desc">免費韓文課程，由字母到中高級文法 + 單字 + 聽力練習</div>
       <div class="card-actions">
-        <a href="https://poe.com/preview/MCKzc2khnAfMfsftWmhT" target="_blank" class="action-btn">
-          <i class="fas fa-image"></i> 查看海報
+        <a href="https://www.howtostudykorean.com" target="_blank" class="action-btn">
+          <i class="fas fa-external-link-alt"></i> 前往
+        </a>
+        <button class="action-btn primary"><i class="fas fa-bookmark"></i> 儲存到我的資源</button>
+      </div>
+    </div>
+
+    <div class="resource-card">
+      <div class="resource-type">播放清單</div>
+      <div class="resource-title">Talk To Me In Korean - Beginner 系列</div>
+      <div class="resource-desc">經典免費韓文課程播放清單，從發音到日常對話</div>
+      <div class="card-actions">
+        <a href="https://www.youtube.com/playlist?list=PL5E4E9D9E5E5E5E5E" target="_blank" class="action-btn">
+          <i class="fas fa-play"></i> 觀看
+        </a>
+        <button class="action-btn primary"><i class="fas fa-bookmark"></i> 儲存到我的資源</button>
+      </div>
+    </div>
+
+    <div class="resource-card">
+      <div class="resource-type">網站</div>
+      <div class="resource-title">NURI 世宗學堂 (免費線上課程)</div>
+      <div class="resource-desc">韓國政府官方免費韓文課程，可線上看 + 下載講義</div>
+      <div class="card-actions">
+        <a href="https://nuri.iksi.or.kr" target="_blank" class="action-btn">
+          <i class="fas fa-external-link-alt"></i> 前往
         </a>
         <button class="action-btn primary"><i class="fas fa-bookmark"></i> 儲存到我的資源</button>
       </div>
@@ -305,7 +315,6 @@
 
   </section>
 
-  <!-- Contribute -->
   <div class="contribute-section">
     <h3>想學更多？</h3>
     <p>探索 YouTube 上的韓文學習影片，繼續提升你的韓文！</p>
@@ -314,7 +323,6 @@
     </a>
   </div>
 
-  <!-- Bottom Navigation -->
   <nav class="bottom-nav">
     <a href="index.html" class="nav-item">
       <div class="nav-icon">🏠</div>
@@ -336,6 +344,10 @@
       <div class="nav-icon">🌐</div>
       <div>資源</div>
     </a>
+    <a href="save.html" class="nav-item">
+      <div class="nav-icon">💾</div>
+      <div>儲存</div>
+    </a>
     <a href="Community.html" class="nav-item">
       <div class="nav-icon">👥</div>
       <div>社區</div>
@@ -345,26 +357,22 @@
 </div>
 
 <script>
-  // Handle save to resources button clicks
-  document.addEventListener('DOMContentLoaded', function() {
-    const saveButtons = document.querySelectorAll('.action-btn.primary');
-    
-    saveButtons.forEach(button => {
-      if (button.textContent.includes('儲存到我的資源')) {
-        button.addEventListener('click', function() {
-          // Change button text to show checkmark
-          this.innerHTML = '<i class="fas fa-check"></i> ✅ 已儲存';
-          this.style.background = '#4caf50'; // Green color for saved state
-          this.disabled = true; // Prevent multiple clicks
-          
-          // Optional: Reset after 3 seconds
-          setTimeout(() => {
-            this.innerHTML = '<i class="fas fa-bookmark"></i> 儲存到我的資源';
-            this.style.background = ''; // Reset to original color
-            this.disabled = false;
-          }, 3000);
-        });
-      }
+  document.querySelectorAll('.action-btn.primary').forEach(button => {
+    button.addEventListener('click', function() {
+      const card = button.closest('.resource-card');
+      const resource = {
+        type: card.querySelector('.resource-type').textContent,
+        title: card.querySelector('.resource-title').textContent,
+        desc: card.querySelector('.resource-desc').textContent,
+        link: card.querySelector('.action-btn').href
+      };
+      
+      const saved = JSON.parse(localStorage.getItem('savedResources') || '[]');
+      saved.push(resource);
+      localStorage.setItem('savedResources', JSON.stringify(saved));
+      
+      this.innerHTML = '<i class="fas fa-check"></i> ✅ 已儲存';
+      this.style.background = '#4caf50';
     });
   });
 </script>

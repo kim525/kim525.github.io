@@ -7,224 +7,41 @@
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   
-  <style>
-    :root {
-      --primary-color: #FF6B6B;
-      --secondary-color: #4ECDC4;
-      --dark-color: #2D3047;
-      --light-color: #F7F9FC;
-      --gray-color: #E9ECEF;
+<style>
+    .nav-icon {
+      font-size: 1.7rem;
+      margin-bottom: 5px;
     }
     
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'PingFang TC', 'Microsoft JhengHei', -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-    
-    body {
-      background-color: var(--light-color);
-      color: var(--dark-color);
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-    
-    .mobile-container {
-      max-width: 500px;
-      margin: 0 auto;
-      background: white;
-      min-height: 100vh;
-      box-shadow: 0 0 20px rgba(0,0,0,0.08);
-      position: relative;
-      overflow-x: hidden;
-    }
-    
-    /* Header */
-    .page-header {
-      background: linear-gradient(135deg, var(--secondary-color), #7eddd6);
-      color: white;
-      padding: 50px 24px 20px;
-      text-align: center;
-      position: relative;
-    }
-    
-    .page-header h1 {
-      font-size: 2.1rem;
-      margin-bottom: 8px;
-      font-weight: 700;
-    }
-    
-    .page-header p {
-      font-size: 1rem;
-      opacity: 0.9;
-    }
-    
-    /* Empty State */
-    .empty-state {
-      text-align: center;
-      padding: 60px 24px;
-      color: #888;
-    }
-    
-    .empty-state i {
-      font-size: 4rem;
-      margin-bottom: 20px;
-      opacity: 0.5;
-    }
-    
-    .empty-state h3 {
-      font-size: 1.3rem;
-      margin-bottom: 10px;
-      color: #666;
-    }
-    
-    .empty-state p {
-      font-size: 0.95rem;
-      margin-bottom: 24px;
-    }
-    
-    .empty-state a {
-      display: inline-block;
-      background: var(--secondary-color);
-      color: white;
-      padding: 14px 32px;
-      border-radius: 30px;
-      text-decoration: none;
-      font-size: 1rem;
-      font-weight: 600;
-    }
-    
-    /* Resources List */
-    .resources-list {
-      padding: 20px;
-    }
-    
-    .resource-card {
-      background: white;
-      border: 1px solid var(--gray-color);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-    
-    .resource-type {
-      display: inline-block;
-      background: var(--secondary-color);
-      color: white;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-    
-    .resource-title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    
-    .resource-desc {
-      font-size: 0.95rem;
-      color: #666;
-      margin-bottom: 16px;
-      line-height: 1.5;
-    }
-    
-    .card-actions {
+    .tab-buttons {
       display: flex;
       gap: 10px;
-      flex-wrap: wrap;
+      padding: 16px;
+      background: white;
     }
     
-    .action-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 20px;
-      border-radius: 25px;
-      border: none;
-      background: var(--light-color);
-      color: var(--dark-color);
-      font-size: 0.95rem;
+    .tab-btn {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid var(--gray-color);
+      border-radius: 12px;
+      background: white;
+      font-size: 1rem;
+      font-weight: 600;
       cursor: pointer;
-      text-decoration: none;
       transition: all 0.25s;
     }
     
-    .action-btn:hover {
-      background: var(--gray-color);
-    }
-    
-    .action-btn.primary {
+    .tab-btn.active {
       background: var(--primary-color);
       color: white;
+      border-color: var(--primary-color);
     }
     
-    .action-btn.primary:hover {
-      background: #ff5252;
-    }
-    
-    .action-btn.danger {
-      background: #ff4757;
-      color: white;
-    }
-    
-    .action-btn.danger:hover {
-      background: #ff3344;
-    }
-    
-    /* Footer */
-    .page-footer {
-      background: var(--dark-color);
-      color: white;
-      padding: 40px 24px 100px;
-      text-align: center;
-      margin-top: 40px;
-    }
-    
-    .footer-content p {
-      margin: 8px 0;
-      font-size: 0.9rem;
-      opacity: 0.8;
-    }
-    
-    /* Bottom Nav */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      max-width: 500px;
-      margin: 0 auto;
-      background: white;
-      display: flex;
-      justify-content: space-around;
-      padding: 12px 0;
-      border-top: 1px solid var(--gray-color);
-      box-shadow: 0 -4px 16px rgba(0,0,0,0.07);
-      z-index: 100;
-    }
-    
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: #666;
-      font-size: 0.8rem;
-      text-decoration: none;
-      transition: color 0.25s;
-    }
-    
-    .nav-item.active {
-      color: var(--primary-color);
-    }
-    
-    .nav-icon {
-      font-size: 1.4rem;
-      margin-bottom: 4px;
+    .section-title {
+      padding: 16px 16px 0;
+      font-size: 1.3rem;
+      font-weight: 700;
     }
   </style>
 </head>
@@ -232,18 +49,27 @@
 <body>
   <div class="mobile-container">
     
-    <!-- Header -->
     <header class="page-header">
       <h1>我的資源</h1>
       <p>已儲存的學習資源</p>
     </header>
     
-    <!-- Resources List -->
+    <div class="tab-buttons">
+      <button class="tab-btn active" onclick="showTab('vocab')">📚 詞彙</button>
+      <button class="tab-btn" onclick="showTab('resources')">🌐 資源</button>
+    </div>
+    
+    <div id="vocabSection">
+      <h3 class="section-title">📚 已儲存的詞彙</h3>
+    </div>
+    
+    <div id="resourcesSection" style="display: none;">
+      <h3 class="section-title">🌐 已儲存的資源</h3>
+    </div>
+    
     <section class="resources-list" id="savedResources">
-      <!-- Saved resources will be loaded here -->
     </section>
     
-    <!-- Empty State (hidden by default) -->
     <div class="empty-state" id="emptyState" style="display: none;">
       <i class="fas fa-bookmark"></i>
       <h3>還沒有儲存的資源</h3>
@@ -251,7 +77,6 @@
       <a href="Resources.html">前往資源頁面</a>
     </div>
     
-    <!-- Footer -->
     <footer class="page-footer">
       <div class="footer-content">
         <p>&copy; 2026 K-City. All rights reserved.</p>
@@ -259,7 +84,6 @@
       </div>
     </footer>
     
-    <!-- Bottom Navigation -->
     <nav class="bottom-nav">
       <a href="index.html" class="nav-item">
         <div class="nav-icon">🏠</div>
@@ -294,41 +118,92 @@
   </div>
   
   <script>
-    // Load saved resources from localStorage
+    function showTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      document.getElementById('vocabSection').style.display = tab === 'vocab' ? 'block' : 'none';
+      document.getElementById('resourcesSection').style.display = tab === 'resources' ? 'block' : 'none';
+      
+      const vocabList = document.getElementById('vocabList');
+      const resourceList = document.getElementById('resourceList');
+      
+      if (tab === 'vocab') {
+        vocabList.style.display = 'block';
+        resourceList.style.display = 'none';
+      } else {
+        vocabList.style.display = 'none';
+        resourceList.style.display = 'block';
+      }
+    }
+    
     document.addEventListener('DOMContentLoaded', function() {
       const savedResources = JSON.parse(localStorage.getItem('savedResources') || '[]');
-      const resourcesContainer = document.getElementById('savedResources');
+      const savedVocab = JSON.parse(localStorage.getItem('savedVocab') || '[]');
+      const vocabContainer = document.getElementById('vocabList');
+      const resourceContainer = document.getElementById('resourceList');
       const emptyState = document.getElementById('emptyState');
       
-      if (savedResources.length === 0) {
-        resourcesContainer.style.display = 'none';
+      document.getElementById('vocabList').style.display = 'block';
+      document.getElementById('resourceList').style.display = 'none';
+      
+      if (savedResources.length === 0 && savedVocab.length === 0) {
+        vocabContainer.style.display = 'none';
+        resourceContainer.style.display = 'none';
         emptyState.style.display = 'block';
       } else {
-        resourcesContainer.style.display = 'block';
         emptyState.style.display = 'none';
         
-        savedResources.forEach((resource, index) => {
-          const card = document.createElement('div');
-          card.className = 'resource-card';
-          card.innerHTML = `
-            <div class="resource-type">${resource.type}</div>
-            <div class="resource-title">${resource.title}</div>
-            <div class="resource-desc">${resource.desc}</div>
-            <div class="card-actions">
-              <a href="${resource.link}" target="_blank" class="action-btn">
-                <i class="fas fa-external-link-alt"></i> 前往
-              </a>
-              <button class="action-btn danger" onclick="removeResource(${index})">
-                <i class="fas fa-trash"></i> 刪除
-              </button>
-            </div>
-          `;
-          resourcesContainer.appendChild(card);
-        });
+        // Show saved vocab
+        if (savedVocab.length > 0) {
+          savedVocab.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'resource-card';
+            card.innerHTML = `
+              <div class="resource-type">詞彙</div>
+              <div class="resource-title">${item.word}</div>
+              <div class="resource-desc">${item.meaning} • ${item.pronunciation}</div>
+              <div class="card-actions">
+                <button class="action-btn" onclick="speakWord('${item.word}')">
+                  <i class="fas fa-volume-up"></i> 發音
+                </button>
+                <button class="action-btn danger" onclick="removeVocab(${index})">
+                  <i class="fas fa-trash"></i> 刪除
+                </button>
+              </div>
+            `;
+            vocabContainer.appendChild(card);
+          });
+        } else {
+          vocabContainer.innerHTML = '<p style="padding:20px; color:#888;">還沒有儲存的詞彙</p>';
+        }
+        
+        // Show saved resources
+        if (savedResources.length > 0) {
+          savedResources.forEach((resource, index) => {
+            const card = document.createElement('div');
+            card.className = 'resource-card';
+            card.innerHTML = `
+              <div class="resource-type">${resource.type}</div>
+              <div class="resource-title">${resource.title}</div>
+              <div class="resource-desc">${resource.desc}</div>
+              <div class="card-actions">
+                <a href="${resource.link}" target="_blank" class="action-btn">
+                  <i class="fas fa-external-link-alt"></i> 前往
+                </a>
+                <button class="action-btn danger" onclick="removeResource(${index})">
+                  <i class="fas fa-trash"></i> 刪除
+                </button>
+              </div>
+            `;
+            resourceContainer.appendChild(card);
+          });
+        } else {
+          resourceContainer.innerHTML = '<p style="padding:20px; color:#888;">還沒有儲存的資源</p>';
+        }
       }
     });
     
-    // Remove resource function
     function removeResource(index) {
       if (confirm('確定要刪除這個資源嗎？')) {
         const savedResources = JSON.parse(localStorage.getItem('savedResources') || '[]');
@@ -336,6 +211,21 @@
         localStorage.setItem('savedResources', JSON.stringify(savedResources));
         location.reload();
       }
+    }
+    
+    function removeVocab(index) {
+      if (confirm('確定要刪除這個詞彙嗎？')) {
+        const savedVocab = JSON.parse(localStorage.getItem('savedVocab') || '[]');
+        savedVocab.splice(index, 1);
+        localStorage.setItem('savedVocab', JSON.stringify(savedVocab));
+        location.reload();
+      }
+    }
+    
+    function speakWord(word) {
+      const utterance = new SpeechSynthesisUtterance(word);
+      utterance.lang = 'ko-KR';
+      speechSynthesis.speak(utterance);
     }
   </script>
 </body>
