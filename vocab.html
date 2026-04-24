@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>詞彙 — 清單 & 記憶卡</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  
+  <style>
+    :root {
+      --primary-color: #FF6B6B;
+      --secondary-color: #4ECDC4;
+      --dark-color: #2D3047;
+      --light-color: #F7F9FC;
+      --gray-color: #E9ECEF;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'PingFang TC', 'Microsoft JhengHei', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    body {
+      background-color: var(--light-color);
+      color: var(--dark-color);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    
+    .mobile-container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      min-height: 100vh;
+      box-shadow: 0 0 20px rgba(0,0,0,0.08);
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    .page-header {
+      background: linear-gradient(135deg, var(--primary-color), #ff8e8e);
+      color: white;
+      padding: 50px 24px 20px;
+      text-align: center;
+      position: relative;
+    }
+    
+    .page-header h1 {
+      font-size: 2.1rem;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    
+    .search-bar {
+      background: white;
+      border-radius: 50px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      margin: 0 16px 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .search-bar input {
+      border: none;
+      flex: 1;
+      font-size: 1rem;
+      outline: none;
+    }
+    
+    .search-bar i {
+      color: var(--primary-color);
+      margin-right: 12px;
+    }
+    
+    .category-tabs {
+      display: flex;
+      overflow-x: auto;
+      padding: 0 20px 16px;
+      gap: 12px;
+      background: white;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--gray-color);
+    }
+    
+    .tab-btn {
+      background: var(--light-color);
+      border: 1px solid var(--gray-color);
+      border-radius: 30px;
+      padding: 10px 20px;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    
+    .tab-btn.active {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+    
+    .vocab-list {
+      padding: 20px 24px;
+    }
+    
+    .flashcard {
+      background: white;
+      border-radius: 16px;
+      padding: 24px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+      border: 1px solid var(--gray-color);
+      transition: all 0.28s;
+    }
+    
+    .flashcard:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.1);
+    }
+    
+    .word-main {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--dark-color);
+    }
+    
+    .pronunciation {
+      font-size: 1.15rem;
+      color: #666;
+      margin-bottom: 12px;
+    }
+    
+    .meaning {
+      font-size: 1.25rem;
+      color: var(--primary-color);
+      margin: 16px 0 12px;
+      font-weight: 600;
+    }
+    
+    .example {
+      font-size: 0.98rem;
+      color: #444;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    
+    .card-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    
+    .action-btn {
+      background: var(--light-color);
+      border: 1px solid var(--gray-color);
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .action-btn.primary {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+    }
+    
+    .action-btn i {
+      margin-right: 6px;
+    }
+    
+    .srs-teaser {
+      margin: 32px 24px;
+      padding: 24px;
+      background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+      border-radius: 16px;
+      text-align: center;
+    }
+    
+    .srs-teaser h3 {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      color: #2e7d32;
+    }
+    
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+      border-top: 1px solid var(--gray-color);
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.07);
+      z-index: 100;
+    }
+    
+    .page-footer {
+      background: var(--dark-color);
+      color: white;
+      padding: 40px 24px 100px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    
+    .footer-content p {
+      margin: 8px 0;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+    
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #666;
+      font-size: 0.8rem;
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    
+    .nav-item.active {
+      color: var(--primary-color);
+    }
+    
+    .nav-icon {
+      font-size: 1.7rem;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-container">
+
+  <header class="page-header">
+    <h1>詞彙庫</h1>
+    
+    <div class="search-bar">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="搜尋單字或例句...">
+    </div>
+  </header>
+
+  <div class="category-tabs">
+    <button class="tab-btn active">全部</button>
+    <button class="tab-btn">飲食</button>
+    <button class="tab-btn">交通</button>
+    <button class="tab-btn">購物</button>
+    <button class="tab-btn">問候</button>
+    <button class="tab-btn">日常</button>
+  </div>
+
+  <section class="vocab-list">
+    <div class="flashcard">
+      <div class="word-main">된장찌개</div>
+      <div class="pronunciation">doen-jang-jji-gae</div>
+      <div class="meaning">大醬湯</div>
+      <div class="example">저는 된장찌개가 제일 좋아해요.<br>（我最喜歡大醬湯。）</div>
+      
+      <div class="card-actions">
+        <button class="action-btn play-sound-btn" data-word="된장찌개"><i class="fas fa-volume-up"></i> 發音</button>
+        <button class="action-btn primary save-vocab-btn"><i class="fas fa-bookmark"></i> 儲存</button>
+      </div>
+    </div>
+
+    <div class="flashcard">
+      <div class="word-main">지하철</div>
+      <div class="pronunciation">ji-ha-cheol</div>
+      <div class="meaning">地鐵</div>
+      <div class="example">지하철 2호선에서 내려주세요.<br>（請在2號線下车。）</div>
+      
+      <div class="card-actions">
+        <button class="action-btn play-sound-btn" data-word="지하철"><i class="fas fa-volume-up"></i> 發音</button>
+        <button class="action-btn primary save-vocab-btn"><i class="fas fa-bookmark"></i> 儲存</button>
+      </div>
+    </div>
+
+    <div class="flashcard">
+      <div class="word-main">감사합니다</div>
+      <div class="pronunciation">gam-sa-ham-ni-da</div>
+      <div class="meaning">謝謝</div>
+      <div class="example">도와줘서 정말 감사합니다!<br>（真的很謝謝你帮忙！）</div>
+      
+      <div class="card-actions">
+        <button class="action-btn play-sound-btn" data-word="감사합니다"><i class="fas fa-volume-up"></i> 發音</button>
+        <button class="action-btn primary save-vocab-btn"><i class="fas fa-bookmark"></i> 儲存</button>
+      </div>
+    </div>
+
+    <div class="flashcard" data-category="飲食">
+      <div class="word-main">김치</div>
+      <div class="pronunciation">gim-chi</div>
+      <div class="meaning">泡菜</div>
+      <div class="example">한국의 대표 음식은 김치입니다.<br>（韓國的代表食物是泡菜。）</div>
+      
+      <div class="card-actions">
+        <button class="action-btn play-sound-btn" data-word="김치"><i class="fas fa-volume-up"></i> 發音</button>
+        <button class="action-btn primary save-vocab-btn"><i class="fas fa-bookmark"></i> 儲存</button>
+      </div>
+    </div>
+
+    <div class="flashcard" data-category="飲食">
+      <div class="word-main">비빔밥</div>
+      <div class="pronunciation">bi-bim-bap</div>
+      <div class="meaning">拌飯</div>
+      <div class="example">비빔밥을 먹어보셨나요?<br>（您吃过拌饭吗？）</div>
+      
+      <div class="card-actions">
+        <button class="action-btn play-sound-btn" data-word="비빔밥"><i class="fas fa-volume-up"></i> 發音</button>
+        <button class="action-btn primary save-vocab-btn"><i class="fas fa-bookmark"></i> 儲存</button>
+      </div>
+    </div>
+
+    <div class="flashcard" data-category="交通">
+      <div class="word-main">버스</div>
+      <div class="pronunciation">beo-seu</div>
+      <div class="meaning">公車</div>
+      <div class="example">버스로 학교에 가요.<br>（我搭公車去學校。）</div>
+      
+      <div class="card-actions">
+        <button class="action-btn play-sound-btn" data-word="버스"><i class="fas fa-volume-up"></i> 發音</button>
+        <button class="action-btn primary save-vocab-btn"><i class="fas fa-bookmark"></i> 儲存</button>
+      </div>
+    </div>
+
+    <div class="flashcard" data-category="交通">
+      <div class="word-main">택시</div>
+      <div class="pronunciation">taek-si</div>
+      <div class="meaning">計程車</div>
+      <div class="example">택시를 타고 갈게요.<br>（我要搭計程車去。）</div>
+      
+      <div class="card-actions">
+        <button class="action-btn play-sound-btn" data-word="택시"><i class="fas fa-volume-up"></i> 發音</button>
+        <button class="action-btn primary save-vocab-btn"><i class="fas fa-bookmark"></i> 儲存</button>
+      </div>
+    </div>
+
+    <div class="flashcard" data-category="購物">
+      <div class="word-main">시장</div>
+      <div class="pronunciation">si-jang</div>
+      <div class="meaning">市場</div>
+      <div class="example">시장에서 과일을 사요.<br>（我在市場買水果。）</div>
+      
+      <div class="card-actions">
+        <button class="action-btn play-sound-btn" data-word="시장"><i class="fas fa-volume-up"></i> 發音</button>
+        <button class="action-btn primary save-vocab-btn"><i class="fas fa-bookmark"></i> 儲存</button>
+      </div>
+    </div>
+
+    <div class="flashcard" data-category="購物">
+      <div class="word-main">가격</div>
+      <div class="pronunciation">ga-gyeok</div>
+      <div class="meaning">價格</div>
+      <div class="example">이 ��의 ���격은 얼마예요?<br>（這件衣服的價格是多少？）</div>
+      
+      <div class="card-actions">
+        <button class="action-btn play-sound-btn" data-word="가격"><i class="fas fa-volume-up"></i> 發音</button>
+        <button class="action-btn primary save-vocab-btn"><i class="fas fa-bookmark"></i> 儲存</button>
+      </div>
+    </div>
+
+    <div class="flashcard" data-category="問候">
+      <div class="word-main">안녕하세요</div>
+      <div class="pronunciation">an-nyeong-ha-se-yo</div>
+      <div class="meaning">您好</div>
+      <div class="example">안녕하세요, 만나서 반가워요.<br>（您好，很高興見到您。）</div>
+      
+      <div class="card-actions">
+        <button class="action-btn play-sound-btn" data-word="안녕하세요"><i class="fas fa-volume-up"></i> 發音</button>
+        <button class="action-btn primary save-vocab-btn"><i class="fas fa-bookmark"></i> 儲存</button>
+      </div>
+    </div>
+
+    <div class="flashcard" data-category="問候">
+      <div class="word-main">안녕히 가세요</div>
+      <div class="pronunciation">an-nyeong-hi ga-se-yo</div>
+      <div class="meaning">再見</div>
+      <div class="example">안녕히 가세요, 내일 봐요.<br>（再見，明天見。）</div>
+      
+      <div class="card-actions">
+        <button class="action-btn play-sound-btn" data-word="안녕히 가세요"><i class="fas fa-volume-up"></i> 發音</button>
+        <button class="action-btn primary save-vocab-btn"><i class="fas fa-bookmark"></i> 儲存</button>
+      </div>
+    </div>
+
+    <div class="flashcard" data-category="日常">
+      <div class="word-main">집</div>
+      <div class="pronunciation">jip</div>
+      <div class="meaning">家</div>
+      <div class="example">집에 가고 싶어요.<br>（我想回家。）</div>
+      
+      <div class="card-actions">
+        <button class="action-btn play-sound-btn" data-word="집"><i class="fas fa-volume-up"></i> 發音</button>
+        <button class="action-btn primary save-vocab-btn"><i class="fas fa-bookmark"></i> 儲存</button>
+      </div>
+    </div>
+
+    <div class="flashcard" data-category="日常">
+      <div class="word-main">학교</div>
+      <div class="pronunciation">hak-gyo</div>
+      <div class="meaning">學校</div>
+      <div class="example">학교에서 한국어를 배워요.<br>（我在學校學韓語。）</div>
+      
+      <div class="card-actions">
+        <button class="action-btn play-sound-btn" data-word="학교"><i class="fas fa-volume-up"></i> 發音</button>
+        <button class="action-btn primary save-vocab-btn"><i class="fas fa-bookmark"></i> 儲存</button>
+      </div>
+    </div>
+
+    <div class="flashcard" data-category="日常">
+      <div class="word-main">친구</div>
+      <div class="pronunciation">chin-gu</div>
+      <div class="meaning">朋友</div>
+      <div class="example">친구와 영화를 봤어요.<br>（我和朋友看了電影。）</div>
+      
+      <div class="card-actions">
+        <button class="action-btn play-sound-btn" data-word="친구"><i class="fas fa-volume-up"></i> 發音</button>
+        <button class="action-btn primary save-vocab-btn"><i class="fas fa-bookmark"></i> 儲存</button>
+      </div>
+    </div>
+
+    <div class="flashcard" data-category="日常">
+      <div class="word-main">시간</div>
+      <div class="pronunciation">si-gan</div>
+      <div class="meaning">時間</div>
+      <div class="example">지금 몇 시예요?<br>（現在幾點？）</div>
+      
+      <div class="card-actions">
+        <button class="action-btn play-sound-btn" data-word="시간"><i class="fas fa-volume-up"></i> 發音</button>
+        <button class="action-btn primary save-vocab-btn"><i class="fas fa-bookmark"></i> 儲存</button>
+      </div>
+    </div>
+
+    <div class="flashcard" data-category="日常">
+      <div class="word-main">날씨</div>
+      <div class="pronunciation">nal-ssi</div>
+      <div class="meaning">天氣</div>
+      <div class="example">오늘 날씨가 좋아요.<br>（今天天氣很好。）</div>
+      
+      <div class="card-actions">
+        <button class="action-btn play-sound-btn" data-word="날씨"><i class="fas fa-volume-up"></i> 發音</button>
+        <button class="action-btn primary save-vocab-btn"><i class="fas fa-bookmark"></i> 儲存</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="page-footer">
+    <div class="footer-content">
+      <p>&copy; 2026 K-City. All rights reserved.</p>
+      <p>Learn Korean through building your virtual Seoul!</p>
+    </div>
+  </footer>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <div class="nav-icon">🏠</div>
+      <div>首頁</div>
+    </a>
+    <a href="vocab.html" class="nav-item active">
+      <div class="nav-icon">📚</div>
+      <div>詞彙</div>
+    </a>
+    <a href="Stats.html" class="nav-item">
+      <div class="nav-icon">📊</div>
+      <div>統計</div>
+    </a>
+    <a href="StudyHub.html" class="nav-item">
+      <div class="nav-icon">🔌</div>
+      <div>IoT</div>
+    </a>
+    <a href="Resources.html" class="nav-item">
+      <div class="nav-icon">🌐</div>
+      <div>資源</div>
+    </a>
+    <a href="save.html" class="nav-item">
+      <div class="nav-icon">💾</div>
+      <div>儲存</div>
+    </a>
+    <a href="Community.html" class="nav-item">
+      <div class="nav-icon">👥</div>
+      <div>社區</div>
+    </a>
+  </nav>
+
+</div>
+
+<script>
+  document.querySelectorAll('.play-sound-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      const word = button.dataset.word;
+      const utterance = new SpeechSynthesisUtterance(word);
+      utterance.lang = 'ko-KR';
+      speechSynthesis.speak(utterance);
+    });
+  });
+
+  document.querySelectorAll('.save-vocab-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const card = button.closest('.flashcard');
+      const word = card.querySelector('.word-main').textContent;
+      const meaning = card.querySelector('.meaning').textContent;
+      const pronunciation = card.querySelector('.pronunciation').textContent;
+      const example = card.querySelector('.example') ? card.querySelector('.example').textContent : '';
+      
+      const saved = JSON.parse(localStorage.getItem('savedVocab') || '[]');
+      saved.push({ word, meaning, pronunciation, example });
+      localStorage.setItem('savedVocab', JSON.stringify(saved));
+      
+      this.innerHTML = '<i class="fas fa-check"></i> ✅ 已儲存';
+      this.style.background = '#4caf50';
+    });
+  });
+</script>
+
+</body>
+</html>

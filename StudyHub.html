@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title> IoT 學習中心 — K‑City</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  
+  <style>
+    :root {
+      --primary-color: #FF6B6B;
+      --secondary-color: #4ECDC4;
+      --dark-color: #2D3047;
+      --light-color: #F7F9FC;
+      --gray-color: #E9ECEF;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'PingFang TC', 'Microsoft JhengHei', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    body {
+      background-color: var(--light-color);
+      color: var(--dark-color);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    
+    .mobile-container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      min-height: 100vh;
+      box-shadow: 0 0 20px rgba(0,0,0,0.08);
+    }
+    
+    .page-header {
+      background: linear-gradient(135deg, var(--primary-color), #ff8e8e);
+      color: white;
+      padding: 50px 24px 20px;
+      text-align: center;
+    }
+    
+    .page-header h1 {
+      font-size: 2.1rem;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    
+    .search-bar {
+      background: white;
+      border-radius: 50px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      margin: 0 16px 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .search-bar input {
+      border: none;
+      flex: 1;
+      font-size: 1rem;
+      outline: none;
+    }
+    
+    .search-bar i {
+      color: var(--primary-color);
+      margin-right: 12px;
+    }
+    
+    .category-tabs {
+      display: flex;
+      overflow-x: auto;
+      padding: 0 20px 16px;
+      gap: 12px;
+      background: white;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--gray-color);
+    }
+    
+    .tab-btn {
+      background: var(--light-color);
+      border: 1px solid var(--gray-color);
+      border-radius: 30px;
+      padding: 10px 20px;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    
+    .tab-btn.active {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+    
+    .resources-list {
+      padding: 20px 24px;
+    }
+    
+    .resource-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+      border: 1px solid var(--gray-color);
+      transition: all 0.28s;
+    }
+    
+    .resource-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.1);
+    }
+    
+    .resource-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--dark-color);
+    }
+    
+    .resource-desc {
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 16px;
+    }
+    
+    .resource-type {
+      font-size: 0.85rem;
+      color: var(--primary-color);
+      margin-bottom: 12px;
+      display: inline-block;
+      background: var(--light-color);
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+    
+    .card-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .action-btn {
+      background: var(--light-color);
+      border: 1px solid var(--gray-color);
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .action-btn.primary {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+    }
+    
+    .action-btn i {
+      margin-right: 6px;
+    }
+    
+    .contribute-section {
+      margin: 32px 24px;
+      padding: 24px;
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      border-radius: 16px;
+      text-align: center;
+    }
+    
+    .contribute-section h3 {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      color: #1565c0;
+    }
+    
+    .page-footer {
+      background: var(--dark-color);
+      color: white;
+      padding: 40px 24px 100px;
+      text-align: center;
+      margin-top: 40px;
+    }
+    
+    .footer-content p {
+      margin: 8px 0;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+    
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+      border-top: 1px solid var(--gray-color);
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.07);
+      z-index: 100;
+    }
+    
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #666;
+      font-size: 0.8rem;
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    
+    .nav-item.active {
+      color: var(--primary-color);
+    }
+    
+    .nav-icon {
+      font-size: 1.7rem;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-container">
+
+  <header class="page-header">
+    <h1>學習中心</h1>
+    
+    <div class="search-bar">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="搜尋網站、播放清單、短片...">
+    </div>
+  </header>
+
+  <div class="category-tabs">
+    <button class="tab-btn active">全部</button>
+  </div>
+
+  <section class="resources-list">
+
+    <div class="resource-card">
+      <div class="resource-type">網站</div>
+      <div class="resource-title">HowtostudyKorean.com</div>
+      <div class="resource-desc">免費韓文課程，由字母到中高級文法 + 單字 + 聽力練習，結構清晰適合自學</div>
+      <div class="card-actions">
+        <a href="https://www.howtostudykorean.com" target="_blank" class="action-btn"><i class="fas fa-external-link-alt"></i> 前往</a>
+        <button class="action-btn primary"><i class="fas fa-bookmark"></i> 儲存</button>
+      </div>
+    </div>
+
+    <div class="resource-card">
+      <div class="resource-type">播放清單</div>
+      <div class="resource-title">Talk To Me In Korean - Beginner 系列</div>
+      <div class="resource-desc">經典免費韓文課程播放清單，從發音到日常對話，附講義下載</div>
+      <div class="card-actions">
+        <a href="https://www.youtube.com/playlist?list=PL5E4E9D9E5E5E5E5E" target="_blank" class="action-btn"><i class="fas fa-play"></i> 觀看</a>
+        <button class="action-btn primary"><i class="fas fa-bookmark"></i> 儲存</button>
+      </div>
+    </div>
+
+    <div class="resource-card">
+      <div class="resource-type">短片</div>
+      <div class="resource-title">Easy Korean - 街頭訪問真實對話</div>
+      <div class="resource-desc">韓國街頭真人口語短片，超適合練聽力 + 學自然表達</div>
+      <div class="card-actions">
+        <a href="https://www.youtube.com/c/EasyKorean" target="_blank" class="action-btn"><i class="fas fa-external-link-alt"></i> 前往頻道</a>
+        <button class="action-btn primary"><i class="fas fa-bookmark"></i> 儲存</button>
+      </div>
+    </div>
+
+    <div class="resource-card">
+      <div class="resource-type">網站</div>
+      <div class="resource-title">NURI 世宗學堂 (免費線上課程)</div>
+      <div class="resource-desc">韓國政府官方免費韓文課程，可線上看 + 下載講義，適合各級別</div>
+      <div class="card-actions">
+        <a href="https://nuri.iksi.or.kr" target="_blank" class="action-btn"><i class="fas fa-external-link-alt"></i> 前往</a>
+        <button class="action-btn primary"><i class="fas fa-bookmark"></i> 儲存</button>
+      </div>
+    </div>
+
+    <div class="resource-card">
+      <div class="resource-type">播放清單</div>
+      <div class="resource-title">Korean Unnie - 日常韓文短句</div>
+      <div class="resource-desc">可愛又實用的韓文短片 + 播放清單，適合零碎時間學習</div>
+      <div class="card-actions">
+        <a href="https://www.youtube.com/c/KoreanUnnie" target="_blank" class="action-btn"><i class="fas fa-play"></i> 觀看</a>
+        <button class="action-btn primary"><i class="fas fa-bookmark"></i> 儲存</button>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="contribute-section">
+    <h3>想學更多？</h3>
+    <p>探索 YouTube 上的韓文學習影片，繼續提升你的韓文！</p>
+    <a href="https://www.youtube.com/results?search_query=%E9%9F%A9%E6%96%87%E5%AD%A6%E7%BF%92" target="_blank" class="action-btn primary" style="margin-top:16px; padding:14px 32px; font-size:1.05rem; display: inline-block; text-decoration: none;">
+      <i class="fas fa-play"></i> 韓文學習影片
+    </a>
+  </div>
+
+  <footer class="page-footer">
+    <div class="footer-content">
+      <p>&copy; 2026 K-City. All rights reserved.</p>
+      <p>Learn Korean through building your virtual Seoul!</p>
+    </div>
+  </footer>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <div class="nav-icon">🏠</div>
+      <div>首頁</div>
+    </a>
+    <a href="vocab.html" class="nav-item">
+      <div class="nav-icon">📚</div>
+      <div>詞彙</div>
+    </a>
+    <a href="Stats.html" class="nav-item">
+      <div class="nav-icon">📊</div>
+      <div>統計</div>
+    </a>
+    <a href="StudyHub.html" class="nav-item active">
+      <div class="nav-icon">🔌</div>
+      <div>IoT</div>
+    </a>
+    <a href="Resources.html" class="nav-item">
+      <div class="nav-icon">🌐</div>
+      <div>資源</div>
+    </a>
+    <a href="save.html" class="nav-item">
+      <div class="nav-icon">💾</div>
+      <div>儲存</div>
+    </a>
+    <a href="Community.html" class="nav-item">
+      <div class="nav-icon">👥</div>
+      <div>社區</div>
+    </a>
+  </nav>
+
+</div>
+
+<script>
+  document.querySelectorAll('.action-btn.primary').forEach(button => {
+    button.addEventListener('click', function() {
+      this.innerHTML = '<i class="fas fa-check"></i> ✅ 已儲存';
+      this.style.background = '#4caf50';
+    });
+  });
+</script>
+
+</body>
+</html>

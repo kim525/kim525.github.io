@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>學習統計 — K‑City</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <style>
+    :root {
+      --primary-color: #FF6B6B;
+      --secondary-color: #4ECDC4;
+      --dark-color: #2D3047;
+      --light-color: #F7F9FC;
+      --gray-color: #E9ECEF;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'PingFang TC', 'Microsoft JhengHei', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    body {
+      background-color: var(--light-color);
+      color: var(--dark-color);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+    
+    .mobile-container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      min-height: 100vh;
+      box-shadow: 0 0 20px rgba(0,0,0,0.08);
+    }
+    
+    .header {
+      background: linear-gradient(135deg, var(--secondary-color) 0%, #7eddd6 100%);
+      color: white;
+      padding: 70px 24px 40px;
+      text-align: center;
+    }
+    
+    .header h1 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    
+    .header p {
+      opacity: 0.9;
+    }
+    
+    .chart-section {
+      padding: 24px;
+    }
+    
+    .chart-container {
+      background: var(--light-color);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 24px;
+      border: 1px solid var(--gray-color);
+    }
+    
+    .chart-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--dark-color);
+    }
+    
+    .insight-card {
+      background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+      border-radius: 14px;
+      padding: 18px;
+      margin: 16px 24px;
+    }
+    
+    .insight-card h3 {
+      font-size: 1rem;
+      margin-bottom: 10px;
+      color: #e65100;
+    }
+    
+    .insight-card p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+    
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      font-size: 0.9rem;
+    }
+    
+    .data-table th, .data-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--gray-color);
+    }
+    
+    .data-table th {
+      background: var(--light-color);
+      font-weight: 600;
+    }
+    
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+      border-top: 1px solid var(--gray-color);
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.07);
+      z-index: 100;
+    }
+    
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #666;
+      font-size: 0.8rem;
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    
+    .nav-item.active {
+      color: var(--primary-color);
+    }
+    
+    .nav-icon {
+      font-size: 1.7rem;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-container">
+
+  <header class="header">
+    <h1>📊 學習統計</h1>
+    <p>數據顯示學習難度與興趣趨勢</p>
+  </header>
+
+  <section class="chart-section">
+    <div class="chart-container">
+      <div class="chart-title">課題平均分數比較</div>
+      <canvas id="scoreChart"></canvas>
+    </div>
+    
+    <div class="chart-container">
+      <div class="chart-title">練習次數統計</div>
+      <canvas id="attemptsChart"></canvas>
+    </div>
+  </section>
+
+  <div class="insight-card">
+    <h3>💡 數據洞察</h3>
+    <p>本課題平均分數最低（5.2分）但練習次數最多（102次），顯示學習者認為此課題最具挑戰性。</p>
+  </div>
+
+  <section class="chart-section">
+    <div class="chart-container">
+      <div class="chart-title">原始數據</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>課題</th>
+            <th>平均分數</th>
+            <th>練習次數</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>인사말</td><td>8.2</td><td>45</td></tr>
+          <tr><td>숫자</td><td>7.1</td><td>62</td></tr>
+          <tr><td>조사</td><td>5.8</td><td>89</td></tr>
+          <tr><td>과거시제</td><td>6.5</td><td>71</td></tr>
+          <tr><td>존댓말</td><td>5.2</td><td>102</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <div class="nav-icon">🏠</div>
+      <div>首頁</div>
+    </a>
+    <a href="vocab.html" class="nav-item">
+      <div class="nav-icon">📚</div>
+      <div>詞彙</div>
+    </a>
+    <a href="Stats.html" class="nav-item active">
+      <div class="nav-icon">📊</div>
+      <div>統計</div>
+    </a>
+    <a href="StudyHub.html" class="nav-item">
+      <div class="nav-icon">🔌</div>
+      <div>IoT</div>
+    </a>
+    <a href="Resources.html" class="nav-item">
+      <div class="nav-icon">🌐</div>
+      <div>資源</div>
+    </a>
+    <a href="save.html" class="nav-item">
+      <div class="nav-icon">💾</div>
+      <div>儲存</div>
+    </a>
+    <a href="Community.html" class="nav-item">
+      <div class="nav-icon">👥</div>
+      <div>社區</div>
+    </a>
+  </nav>
+
+</div>
+
+<script>
+  const scoreCtx = document.getElementById('scoreChart').getContext('2d');
+  new Chart(scoreCtx, {
+    type: 'bar',
+    data: {
+      labels: ['問候語', '數字', '助詞', '過去式', '敬語'],
+      datasets: [{
+        label: '平均分數 (1-10)',
+        data: [8.2, 7.1, 5.8, 6.5, 5.2],
+        backgroundColor: ['#4ECDC4', '#4ECDC4', '#FF6B6B', '#4ECDC4', '#FF6B6B'],
+        borderRadius: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, max: 10 } }
+    }
+  });
+
+  const attemptsCtx = document.getElementById('attemptsChart').getContext('2d');
+  new Chart(attemptsCtx, {
+    type: 'bar',
+    data: {
+      labels: ['問候語', '數字', '助詞', '過去式', '敬語'],
+      datasets: [{
+        label: '練習次數',
+        data: [45, 62, 89, 71, 102],
+        backgroundColor: '#FF6B6B',
+        borderRadius: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } }
+    }
+  });
+</script>
+
+</body>
+</html>
