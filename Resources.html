@@ -28,6 +28,7 @@
       color: var(--dark-color);
       line-height: 1.6;
       min-height: 100vh;
+      overflow-x: hidden;
     }
     
     .mobile-container {
@@ -227,6 +228,20 @@
       font-size: 1.7rem;
       margin-bottom: 5px;
     }
+    
+    /* Footer */
+    .page-footer {
+      background: var(--dark-color);
+      color: white;
+      padding: 40px 24px 80px;
+      text-align: center;
+    }
+    
+    .footer-content p {
+      margin: 8px 0;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
   </style>
 </head>
 <body>
@@ -236,11 +251,6 @@
   <!-- Header -->
   <header class="page-header">
     <h1>資源中心</h1>
-    
-    <div class="search-bar">
-      <i class="fas fa-search"></i>
-      <input type="text" placeholder="搜尋網站、影片、單字...">
-    </div>
   </header>
 
   <!-- Tabs -->
@@ -332,9 +342,13 @@
       <div class="nav-icon">🔌</div>
       <div>IoT</div>
     </a>
-    <a href="Resources.html" class="nav-item active">
+<a href="Resources.html" class="nav-item active">
       <div class="nav-icon">🌐</div>
       <div>資源</div>
+    </a>
+    <a href="save.html" class="nav-item">
+      <div class="nav-icon">💾</div>
+      <div>儲存</div>
     </a>
     <a href="Community.html" class="nav-item">
       <div class="nav-icon">👥</div>
@@ -349,25 +363,37 @@
   document.addEventListener('DOMContentLoaded', function() {
     const saveButtons = document.querySelectorAll('.action-btn.primary');
     
-    saveButtons.forEach(button => {
+    saveButtons.forEach((button, index) => {
       if (button.textContent.includes('儲存到我的資源')) {
         button.addEventListener('click', function() {
-          // Change button text to show checkmark
-          this.innerHTML = '<i class="fas fa-check"></i> ✅ 已儲存';
-          this.style.background = '#4caf50'; // Green color for saved state
-          this.disabled = true; // Prevent multiple clicks
+          const card = button.closest('.resource-card');
+          const title = card.querySelector('.resource-title')?.textContent || '資源標題';
+          const desc = card.querySelector('.resource-desc')?.textContent || '資源描述';
+          const type = card.querySelector('.resource-type')?.textContent || '資源';
+          const link = card.querySelector('a[href]')?.href || '#';
           
-          // Optional: Reset after 3 seconds
-          setTimeout(() => {
-            this.innerHTML = '<i class="fas fa-bookmark"></i> 儲存到我的資源';
-            this.style.background = ''; // Reset to original color
-            this.disabled = false;
-          }, 3000);
+          // Get existing saved resources
+          const savedResources = JSON.parse(localStorage.getItem('savedResources') || '[]');
+          
+          // Check if already saved
+          if (savedResources.some(r => r.title === title)) {
+            button.innerHTML = '<i class="fas fa-check"></i> ✅ 已儲存';
+            button.style.background = '#4caf50';
+            return;
+          }
+          
+          // Add new resource
+          savedResources.push({ title, desc, type, link });
+          localStorage.setItem('savedResources', JSON.stringify(savedResources));
+          
+          button.innerHTML = '<i class="fas fa-check"></i> ✅ 已儲存';
+          button.style.background = '#4caf50';
+          button.disabled = true;
         });
       }
-    });
-  });
-</script>
+});
+   });
+ </script>
 
 </body>
 </html>

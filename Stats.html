@@ -30,6 +30,7 @@
       line-height: 1.6;
       min-height: 100vh;
       padding-bottom: 80px;
+      overflow-x: hidden;
     }
     
     .mobile-container {
@@ -38,6 +39,8 @@
       background: white;
       min-height: 100vh;
       box-shadow: 0 0 20px rgba(0,0,0,0.08);
+      position: relative;
+      overflow-x: hidden;
     }
     
     .header {
@@ -145,6 +148,20 @@
       font-size: 1.7rem;
       margin-bottom: 5px;
     }
+    
+    /* Footer */
+    .page-footer {
+      background: var(--dark-color);
+      color: white;
+      padding: 40px 24px 80px;
+      text-align: center;
+    }
+    
+    .footer-content p {
+      margin: 8px 0;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
   </style>
 </head>
 <body>
@@ -216,6 +233,10 @@
       <div class="nav-icon">🌐</div>
       <div>資源</div>
     </a>
+    <a href="save.html" class="nav-item">
+      <div class="nav-icon">💾</div>
+      <div>儲存</div>
+    </a>
     <a href="Community.html" class="nav-item">
       <div class="nav-icon">👥</div>
       <div>社區</div>
@@ -275,8 +296,8 @@
         legend: { display: false }
       }
     }
-  });
-</script>
+});
+  </script>
 
 </body>
 </html>

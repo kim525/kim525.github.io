@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="zh-HK">
 <head>
@@ -78,11 +79,27 @@
       margin-right: 12px;
     }
     
+    .search-btn {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 4px 8px;
+      margin-left: 8px;
+    }
+    
+    .search-btn:hover {
+      opacity: 0.7;
+    }
+    }
+    
     /* Category Tabs */
     .category-tabs {
       display: flex;
+      justify-content: flex-start;
       overflow-x: auto;
-      padding: 0 20px 16px;
+      padding: 12px 0 16px 24px;
+      margin-left: 6px;
       gap: 12px;
       background: white;
       position: sticky;
@@ -120,48 +137,12 @@
       margin-bottom: 20px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.06);
       border: 1px solid var(--gray-color);
-      transition: transform 0.5s, box-shadow 0.28s;
-      transform-style: preserve-3d;
-      cursor: pointer;
-      position: relative;
-    }
-    
-    .flashcard.flipped {
-      transform: rotateY(180deg);
-    }
-    
-    .flashcard-front, .flashcard-back {
-      backface-visibility: hidden;
       transition: all 0.28s;
-    }
-    
-    .flashcard-back {
-      position: absolute;
-      top: 24px;
-      left: 20px;
-      right: 20px;
-      transform: rotateY(180deg);
-    }
-    
-    .flashcard.flipped .flashcard-front {
-      opacity: 0;
-    }
-    
-    .flashcard.flipped .flashcard-back {
-      transform: rotateY(180deg);
-    }
-    
-    .flashcard:not(.flipped) .flashcard-back {
-      opacity: 0;
     }
     
     .flashcard:hover {
       transform: translateY(-4px);
       box-shadow: 0 10px 24px rgba(0,0,0,0.1);
-    }
-    
-    .flashcard.flipped:hover {
-      transform: rotateY(180deg) translateY(-4px);
     }
     
     .flip-hint {
@@ -727,14 +708,9 @@
 
 <div class="mobile-container">
 
-  <!-- Header + Search -->
+  <!-- Header -->
   <header class="page-header">
     <h1>詞彙庫</h1>
-    
-    <div class="search-bar">
-      <i class="fas fa-search"></i>
-      <input type="text" placeholder="搜尋單字或例句...">
-    </div>
   </header>
 
   <!-- Category Tabs -->
@@ -749,16 +725,16 @@
 
   <!-- Vocab List -->
   <section class="vocab-list">
-    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard" data-category="飲食">
       <div class="flashcard-front">
         <div class="word-main">된장찌개</div>
         <div class="pronunciation">doen-jang-jji-gae</div>
         <div class="example">저는 된장찌개가 제일 좋아해요.<br>（我最喜歡大醬湯。）</div>
         <div class="card-actions">
-          <button class="action-btn play-sound-btn" data-word="된장찌개"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn play-sound-btn" onclick="speakKoreanWord('된장찌개')"><i class="fas fa-volume-up"></i> 發音</button>
           <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
         </div>
-        <div class="flip-hint">點擊查看中文意思</div>
+        
       </div>
       <div class="flashcard-back">
         <div class="meaning">大醬湯</div>
@@ -766,16 +742,16 @@
       </div>
     </div>
 
-<div class="flashcard" onclick="this.classList.toggle('flipped')">
+<div class="flashcard" data-category="交通">
       <div class="flashcard-front">
         <div class="word-main">지하철</div>
         <div class="pronunciation">ji-ha-cheol</div>
         <div class="example">지하철 2호선에서 내려주세요.<br>（請在2號線下车。）</div>
         <div class="card-actions">
-          <button class="action-btn play-sound-btn" data-word="지하철"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn play-sound-btn" onclick="speakKoreanWord('지하철')"><i class="fas fa-volume-up"></i> 發音</button>
           <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
         </div>
-        <div class="flip-hint">點擊查看中文意思</div>
+        
       </div>
       <div class="flashcard-back">
         <div class="meaning">地鐵</div>
@@ -783,16 +759,16 @@
       </div>
     </div>
 
-    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard" data-category="問候">
       <div class="flashcard-front">
         <div class="word-main">감사합니다</div>
         <div class="pronunciation">gam-sa-ham-ni-da</div>
         <div class="example">도와줘서 정말 감사합니다!<br>（真的很謝謝你幫忙！）</div>
         <div class="card-actions">
-          <button class="action-btn play-sound-btn" data-word="감사합니다"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn play-sound-btn" onclick="speakKoreanWord('감사합니다')"><i class="fas fa-volume-up"></i> 發音</button>
           <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
         </div>
-        <div class="flip-hint">點擊查看中文意思</div>
+        
       </div>
       <div class="flashcard-back">
         <div class="meaning">謝謝</div>
@@ -801,16 +777,16 @@
     </div>
 
     <!-- 飲食 (Food) -->
-    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard" data-category="飲食">
       <div class="flashcard-front">
         <div class="word-main">김치</div>
         <div class="pronunciation">gim-chi</div>
         <div class="example">한국의 대표 음식은 김치입니다.<br>（韓國的代表食物是泡菜。）</div>
         <div class="card-actions">
-          <button class="action-btn play-sound-btn" data-word="김치"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn play-sound-btn" onclick="speakKoreanWord('김치')"><i class="fas fa-volume-up"></i> 發音</button>
           <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
         </div>
-        <div class="flip-hint">點擊查看中文意思</div>
+        
       </div>
       <div class="flashcard-back">
         <div class="meaning">泡菜</div>
@@ -819,16 +795,16 @@
     </div>
 
     <!-- 交通 (Transportation) -->
-<div class="flashcard" onclick="this.classList.toggle('flipped')">
+<div class="flashcard" data-category="交通">
       <div class="flashcard-front">
         <div class="word-main">버스</div>
         <div class="pronunciation">beo-seu</div>
         <div class="example">버스로 학교에 가요.<br>（我搭公車去學校。）</div>
         <div class="card-actions">
-          <button class="action-btn play-sound-btn" data-word="버스"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn play-sound-btn" onclick="speakKoreanWord('버스')"><i class="fas fa-volume-up"></i> 發音</button>
           <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
         </div>
-        <div class="flip-hint">點擊查看中文意思</div>
+        
       </div>
       <div class="flashcard-back">
         <div class="meaning">公車</div>
@@ -836,16 +812,16 @@
       </div>
     </div>
 
-    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard" data-category="交通">
       <div class="flashcard-front">
         <div class="word-main">택시</div>
         <div class="pronunciation">taek-si</div>
         <div class="example">택시를 타고 갈게요.<br>（我要搭計程車去。）</div>
         <div class="card-actions">
-          <button class="action-btn play-sound-btn" data-word="택시"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn play-sound-btn" onclick="speakKoreanWord('택시')"><i class="fas fa-volume-up"></i> 發音</button>
           <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
         </div>
-        <div class="flip-hint">點擊查看中文意思</div>
+        
       </div>
       <div class="flashcard-back">
         <div class="meaning">計程車</div>
@@ -853,16 +829,16 @@
       </div>
     </div>
 
-    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard" data-category="交通">
       <div class="flashcard-front">
         <div class="word-main">비행기</div>
         <div class="pronunciation">bi-haeng-gi</div>
         <div class="example">비행기로 한국에 왔어요.<br>（我搭飛機來韓國。）</div>
         <div class="card-actions">
-          <button class="action-btn play-sound-btn" data-word="비행기"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn play-sound-btn" onclick="speakKoreanWord('비행기')"><i class="fas fa-volume-up"></i> 發音</button>
           <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
         </div>
-        <div class="flip-hint">點擊查看中文意思</div>
+        
       </div>
       <div class="flashcard-back">
         <div class="meaning">飛機</div>
@@ -870,16 +846,16 @@
       </div>
     </div>
 
-    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard" data-category="交通">
       <div class="flashcard-front">
         <div class="word-main">자전거</div>
         <div class="pronunciation">ja-jeon-geo</div>
         <div class="example">자전거를 타고 다니는 게 좋아요.<br>（騎腳踏車四處走走很好。）</div>
         <div class="card-actions">
-          <button class="action-btn play-sound-btn" data-word="자전거"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn play-sound-btn" onclick="speakKoreanWord('자전거')"><i class="fas fa-volume-up"></i> 發音</button>
           <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
         </div>
-        <div class="flip-hint">點擊查看中文意思</div>
+        
       </div>
       <div class="flashcard-back">
         <div class="meaning">腳踏車</div>
@@ -888,16 +864,16 @@
     </div>
 
 <!-- 購物 (Shopping) -->
-    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard" data-category="購物">
       <div class="flashcard-front">
         <div class="word-main">시장</div>
         <div class="pronunciation">si-jang</div>
         <div class="example">시장에서 과일을 사요.<br>（我在市場買水果。）</div>
         <div class="card-actions">
-          <button class="action-btn play-sound-btn" data-word="시장"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn play-sound-btn" onclick="speakKoreanWord('시장')"><i class="fas fa-volume-up"></i> 發音</button>
           <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
         </div>
-        <div class="flip-hint">點擊查看中文意思</div>
+        
       </div>
       <div class="flashcard-back">
         <div class="meaning">市場</div>
@@ -905,16 +881,16 @@
       </div>
     </div>
 
-    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard" data-category="購物">
       <div class="flashcard-front">
         <div class="word-main">가격</div>
         <div class="pronunciation">ga-gyeok</div>
         <div class="example">이 옷의 가격은 얼마예요?<br>（這件衣服的價格是多少？）</div>
         <div class="card-actions">
-          <button class="action-btn play-sound-btn" data-word="가격"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn play-sound-btn" onclick="speakKoreanWord('가격')"><i class="fas fa-volume-up"></i> 發音</button>
           <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
         </div>
-        <div class="flip-hint">點擊查看中文意思</div>
+        
       </div>
       <div class="flashcard-back">
         <div class="meaning">價格</div>
@@ -922,16 +898,16 @@
       </div>
     </div>
 
-    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard" data-category="購物">
       <div class="flashcard-front">
         <div class="word-main">할인</div>
         <div class="pronunciation">hal-in</div>
         <div class="example">오늘은 할인 기간이에요.<br>（今天是折扣期間。）</div>
         <div class="card-actions">
-          <button class="action-btn play-sound-btn" data-word="할인"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn play-sound-btn" onclick="speakKoreanWord('할인')"><i class="fas fa-volume-up"></i> 發音</button>
           <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
         </div>
-        <div class="flip-hint">點擊查看中文意思</div>
+        
       </div>
       <div class="flashcard-back">
         <div class="meaning">折扣</div>
@@ -939,16 +915,16 @@
       </div>
     </div>
 
-    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard" data-category="購物">
       <div class="flashcard-front">
         <div class="word-main">현금</div>
         <div class="pronunciation">hyeon-geum</div>
         <div class="example">현금으로 계산할게요.<br>（我要用現金結帳。）</div>
         <div class="card-actions">
-          <button class="action-btn play-sound-btn" data-word="현금"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn play-sound-btn" onclick="speakKoreanWord('현금')"><i class="fas fa-volume-up"></i> 發音</button>
           <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
         </div>
-        <div class="flip-hint">點擊查看中文意思</div>
+        
       </div>
       <div class="flashcard-back">
         <div class="meaning">現金</div>
@@ -957,16 +933,16 @@
     </div>
 
     <!-- 問候 (Greetings) -->
-    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard" data-category="問候">
       <div class="flashcard-front">
         <div class="word-main">안녕하세요</div>
         <div class="pronunciation">an-nyeong-ha-se-yo</div>
         <div class="example">안녕하세요, 만나서 반가워요.<br>（您好，很高興見到您。）</div>
         <div class="card-actions">
-          <button class="action-btn play-sound-btn" data-word="안녕하세요"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn play-sound-btn" onclick="speakKoreanWord('안녕하세요')"><i class="fas fa-volume-up"></i> 發音</button>
           <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
         </div>
-        <div class="flip-hint">點擊查看中文意思</div>
+        
       </div>
       <div class="flashcard-back">
         <div class="meaning">您好</div>
@@ -974,16 +950,16 @@
       </div>
     </div>
 
-    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard" data-category="問候">
       <div class="flashcard-front">
         <div class="word-main">안녕히 가세요</div>
         <div class="pronunciation">an-nyeong-hi ga-se-yo</div>
         <div class="example">안녕히 가세요, 내일 봐요.<br>（再見，明天見。）</div>
         <div class="card-actions">
-          <button class="action-btn play-sound-btn" data-word="안녕히 가세요"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn play-sound-btn" onclick="speakKoreanWord('안녕히 가세요')"><i class="fas fa-volume-up"></i> 發音</button>
           <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
         </div>
-        <div class="flip-hint">點擊查看中文意思</div>
+        
       </div>
       <div class="flashcard-back">
         <div class="meaning">再見</div>
@@ -991,16 +967,16 @@
       </div>
     </div>
 
-    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard" data-category="問候">
       <div class="flashcard-front">
         <div class="word-main">실례합니다</div>
         <div class="pronunciation">shil-lye-ham-ni-da</div>
         <div class="example">실례합니다, 화장실이 어디예요?<br>（抱歉，洗手間在哪裡？）</div>
         <div class="card-actions">
-          <button class="action-btn play-sound-btn" data-word="실례합니다"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn play-sound-btn" onclick="speakKoreanWord('실례합니다')"><i class="fas fa-volume-up"></i> 發音</button>
           <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
         </div>
-        <div class="flip-hint">點擊查看中文意思</div>
+        
       </div>
       <div class="flashcard-back">
         <div class="meaning">抱歉</div>
@@ -1008,16 +984,16 @@
       </div>
     </div>
 
-    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard" data-category="問候">
       <div class="flashcard-front">
         <div class="word-main">미안합니다</div>
         <div class="pronunciation">mi-an-ham-ni-da</div>
         <div class="example">늦어서 미안합니다.<br>（對不起，我遲到了。）</div>
         <div class="card-actions">
-          <button class="action-btn play-sound-btn" data-word="미안합니다"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn play-sound-btn" onclick="speakKoreanWord('미안합니다')"><i class="fas fa-volume-up"></i> 發音</button>
           <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
         </div>
-        <div class="flip-hint">點擊查看中文意思</div>
+        
       </div>
       <div class="flashcard-back">
         <div class="meaning">對不起</div>
@@ -1026,16 +1002,16 @@
     </div>
 
 <!-- 日常 (Daily Life) -->
-    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard" data-category="日常">
       <div class="flashcard-front">
         <div class="word-main">집</div>
         <div class="pronunciation">jip</div>
         <div class="example">집에 가고 싶어요.<br>（我想回家。）</div>
         <div class="card-actions">
-          <button class="action-btn play-sound-btn" data-word="집"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn play-sound-btn" onclick="speakKoreanWord('집')"><i class="fas fa-volume-up"></i> 發音</button>
           <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
         </div>
-        <div class="flip-hint">點擊查看中文意思</div>
+        
       </div>
       <div class="flashcard-back">
         <div class="meaning">家</div>
@@ -1043,16 +1019,16 @@
       </div>
     </div>
 
-    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard" data-category="日常">
       <div class="flashcard-front">
         <div class="word-main">학교</div>
         <div class="pronunciation">hak-gyo</div>
         <div class="example">학교에서 한국어를 배워요.<br>（我在學校學韓語。）</div>
         <div class="card-actions">
-          <button class="action-btn play-sound-btn" data-word="학교"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn play-sound-btn" onclick="speakKoreanWord('학교')"><i class="fas fa-volume-up"></i> 發音</button>
           <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
         </div>
-        <div class="flip-hint">點擊查看中文意思</div>
+        
       </div>
       <div class="flashcard-back">
         <div class="meaning">學校</div>
@@ -1060,16 +1036,16 @@
       </div>
     </div>
 
-    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard" data-category="日常">
       <div class="flashcard-front">
         <div class="word-main">친구</div>
         <div class="pronunciation">chin-gu</div>
         <div class="example">친구와 영화를 봤어요.<br>（我和朋友看了電影。）</div>
         <div class="card-actions">
-          <button class="action-btn play-sound-btn" data-word="친구"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn play-sound-btn" onclick="speakKoreanWord('친구')"><i class="fas fa-volume-up"></i> 發音</button>
           <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
         </div>
-        <div class="flip-hint">點擊查看中文意思</div>
+        
       </div>
       <div class="flashcard-back">
         <div class="meaning">朋友</div>
@@ -1077,16 +1053,16 @@
       </div>
     </div>
 
-    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard" data-category="日常">
       <div class="flashcard-front">
         <div class="word-main">시간</div>
         <div class="pronunciation">si-gan</div>
         <div class="example">지금 몇 시예요?<br>（現在幾點？）</div>
         <div class="card-actions">
-          <button class="action-btn play-sound-btn" data-word="시간"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn play-sound-btn" onclick="speakKoreanWord('시간')"><i class="fas fa-volume-up"></i> 發音</button>
           <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
         </div>
-        <div class="flip-hint">點擊查看中文意思</div>
+        
       </div>
       <div class="flashcard-back">
         <div class="meaning">時間</div>
@@ -1094,16 +1070,16 @@
       </div>
     </div>
 
-    <div class="flashcard" onclick="this.classList.toggle('flipped')">
+    <div class="flashcard" data-category="日常">
       <div class="flashcard-front">
         <div class="word-main">날씨</div>
         <div class="pronunciation">nal-ssi</div>
         <div class="example">오늘 날씨가 좋아요.<br>（今天天氣很好。）</div>
         <div class="card-actions">
-          <button class="action-btn play-sound-btn" data-word="날씨"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn play-sound-btn" onclick="speakKoreanWord('날씨')"><i class="fas fa-volume-up"></i> 發音</button>
           <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
         </div>
-        <div class="flip-hint">點擊查看中文意思</div>
+        
       </div>
       <div class="flashcard-back">
         <div class="meaning">天氣</div>
@@ -1191,15 +1167,6 @@
     </div>
   </section>
 
-  <!-- SRS / Review Teaser -->
-  <div class="srs-teaser">
-    <h3>今日複習待辦</h3>
-    <p>還有 8 張卡片等你複習（間隔重複系統）</p>
-    <button class="action-btn primary" style="margin-top:12px; padding:14px 32px; font-size:1.05rem;">
-      開始複習
-    </button>
-  </div>
-
   <!-- Footer -->
   <footer class="page-footer">
     <div class="footer-content">
@@ -1208,7 +1175,7 @@
     </div>
   </footer>
 
-  <!-- Bottom Navigation -->
+<!-- Bottom Navigation -->
   <nav class="bottom-nav">
     <a href="index.html" class="nav-item">
       <div class="nav-icon">🏠</div>
@@ -1229,6 +1196,10 @@
     <a href="Resources.html" class="nav-item">
       <div class="nav-icon">🌐</div>
       <div>資源</div>
+    </a>
+    <a href="save.html" class="nav-item">
+      <div class="nav-icon">💾</div>
+      <div>儲存</div>
     </a>
     <a href="Community.html" class="nav-item">
       <div class="nav-icon">👥</div>
@@ -1308,12 +1279,6 @@
       question: 'How do you say "Delicious!" in Korean when eating?',
       options: ['맛있어요', '배부어요', '안 먹을래요', '뭐예요'],
       correct: 0
-    },
-    {
-      type: 'fill-blank',
-      question: 'Complete: "저는 ___ 좋아해요." (I like Korean food.)',
-      blank: '한국음식',
-      hint: 'Korean food'
     }
   ];
 
@@ -1699,76 +1664,91 @@
   speedSelect.addEventListener('change', setAudioSpeed);
   toggleTranscriptBtn.addEventListener('click', toggleTranscript);
 
-  document.querySelectorAll('.play-sound-btn').forEach(button => {
-    button.addEventListener('click', () => {
-      speakKoreanWord(button.dataset.word);
-    });
-  });
-
   function getKoreanVoice() {
     const voices = speechSynthesis.getVoices();
-    return voices.find(v => v.lang.startsWith('ko')) || voices.find(v => v.name.toLowerCase().includes('korean')) || voices[0];
-  }
-
-  function speakKoreanWord(word) {
-    if (!window.speechSynthesis) return;
-    speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(word);
-    utterance.lang = 'ko-KR';
-    const voice = getKoreanVoice();
-    if (voice) utterance.voice = voice;
-    utterance.rate = 1;
-    speechSynthesis.speak(utterance);
-  }
-
-  // Category filtering functionality
+    return voices.find(v => v.lang.startsWith('ko')) || 
+           voices.find(v => v.lang.includes('ko')) ||
+           voices.find(v => v.name.toLowerCase().includes('korean')) ||
+           voices[0];
+}
+   
+   // Global TTS function
+   function speakKoreanWord(word) {
+     speechSynthesis.cancel();
+     const utterance = new SpeechSynthesisUtterance(word);
+     utterance.lang = 'ko-KR';
+     utterance.rate = 0.8;
+     speechSynthesis.speak(utterance);
+   }
+   
+// Global save vocab function
+    function saveVocab(button) {
+      const card = button.closest('.flashcard');
+      const word = card.querySelector('.word-main')?.textContent || '';
+      const pronunciation = card.querySelector('.pronunciation')?.textContent || '';
+      const meaning = card.querySelector('.meaning')?.textContent || 
+                   card.querySelector('.flashcard-back .meaning')?.textContent || 
+                   '中文意思';
+      const example = card.querySelector('.example')?.textContent || '';
+      
+      if (!word) return;
+      
+      const savedVocab = JSON.parse(localStorage.getItem('savedVocab') || '[]');
+      if (savedVocab.some(v => v.word === word)) return;
+      
+      savedVocab.push({ word, pronunciation, meaning, example, type: '單字' });
+      localStorage.setItem('savedVocab', JSON.stringify(savedVocab));
+      
+      button.innerHTML = '<i class="fas fa-check"></i> ✅ 已儲存';
+      button.style.background = '#4caf50';
+      button.disabled = true;
+    }
+    
+// Category filtering functionality
   function initCategoryFilter() {
     const tabButtons = document.querySelectorAll('.tab-btn');
     const flashcards = document.querySelectorAll('.flashcard');
 
-    tabButtons.forEach(button => {
-      button.addEventListener('click', () => {
+    tabButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
         // Remove active class from all tabs
-        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabButtons.forEach(function(btn) {
+          btn.classList.remove('active');
+        });
         // Add active class to clicked tab
         button.classList.add('active');
 
         const category = button.textContent;
 
-        flashcards.forEach(card => {
+        flashcards.forEach(function(card) {
           if (category === '全部') {
             card.style.display = 'block';
           } else {
-            const cardCategory = card.dataset.category || '';
-            card.style.display = cardCategory === category ? 'block' : 'none';
+            const cardCategory = card.getAttribute('data-category') || '';
+            if (cardCategory === category) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
           }
         });
       });
     });
   }
-
-  // Initialize quiz when page loads
-  document.addEventListener('DOMContentLoaded', function() {
-    initCategoryFilter();
-    initQuiz();
+     
+     // Initialize when page loads
+   document.addEventListener('DOMContentLoaded', function() {
+     // Init category filter and quiz
+     initCategoryFilter();
+     initQuiz();
     
-    // Handle save vocab button clicks - standalone function
-    function saveVocab(button) {
-      // Check if already saved
-      if (button.innerHTML.includes('已儲存')) {
-        return;
-      }
-      
-      // Change button text to show checkmark
-      button.innerHTML = '<i class="fas fa-check"></i> ✅ 已儲存';
-      button.style.background = '#4caf50'; // Green color for saved state
-      
-      // Reset after 3 seconds
-      setTimeout(() => {
-        button.innerHTML = '<i class="fas fa-bookmark"></i> 儲存';
-        button.style.background = ''; // Reset to original color
-      }, 3000);
-    }
+    // Save buttons
+    document.querySelectorAll('.save-vocab-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        saveVocab(this);
+      });
+    });
   });
 </script>
 

@@ -246,14 +246,9 @@
 
 <div class="mobile-container">
 
-  <!-- Header + Search -->
+  <!-- Header -->
   <header class="page-header">
     <h1>學習中心</h1>
-    
-    <div class="search-bar">
-      <i class="fas fa-search"></i>
-      <input type="text" placeholder="搜尋網站、播放清單、短片...">
-    </div>
   </header>
 
   <!-- Category Tabs -->
@@ -349,9 +344,13 @@
       <div class="nav-icon">🔌</div>
       <div>IoT</div>
     </a>
-    <a href="Resources.html" class="nav-item">
+<a href="Resources.html" class="nav-item">
       <div class="nav-icon">🌐</div>
       <div>資源</div>
+    </a>
+<a href="save.html" class="nav-item">
+      <div class="nav-icon">💾</div>
+      <div>儲存</div>
     </a>
     <a href="Community.html" class="nav-item">
       <div class="nav-icon">👥</div>
@@ -366,20 +365,32 @@
   document.addEventListener('DOMContentLoaded', function() {
     const saveButtons = document.querySelectorAll('.action-btn.primary');
     
-    saveButtons.forEach(button => {
+    saveButtons.forEach((button) => {
       if (button.textContent.includes('儲存到我的資源')) {
         button.addEventListener('click', function() {
-          // Change button text to show checkmark
-          this.innerHTML = '<i class="fas fa-check"></i> ✅ 已儲存';
-          this.style.background = '#4caf50'; // Green color for saved state
-          this.disabled = true; // Prevent multiple clicks
+          const card = button.closest('.resource-card');
+          const title = card.querySelector('.resource-title')?.textContent || '資源標題';
+          const desc = card.querySelector('.resource-desc')?.textContent || '資源描述';
+          const type = card.querySelector('.resource-type')?.textContent || '資源';
+          const link = card.querySelector('a[href]')?.href || '#';
           
-          // Optional: Reset after 3 seconds
-          setTimeout(() => {
-            this.innerHTML = '<i class="fas fa-bookmark"></i> 儲存到我的資源';
-            this.style.background = ''; // Reset to original color
-            this.disabled = false;
-          }, 3000);
+          // Get existing saved resources
+          const savedResources = JSON.parse(localStorage.getItem('savedResources') || '[]');
+          
+          // Check if already saved
+          if (savedResources.some(r => r.title === title)) {
+            button.innerHTML = '<i class="fas fa-check"></i> ✅ 已儲存';
+            button.style.background = '#4caf50';
+            return;
+          }
+          
+          // Add new resource
+          savedResources.push({ title, desc, type, link });
+          localStorage.setItem('savedResources', JSON.stringify(savedResources));
+          
+          button.innerHTML = '<i class="fas fa-check"></i> ✅ 已儲存';
+          button.style.background = '#4caf50';
+          button.disabled = true;
         });
       }
     });
