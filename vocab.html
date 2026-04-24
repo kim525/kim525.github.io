@@ -1218,11 +1218,11 @@
       options: ['Hello', 'Goodbye', 'Thank you', 'Sorry'],
       correct: 0
     },
-    {
+{
       type: 'fill-blank',
-      question: 'Complete the sentence: "저는 ___ 학생입니다." (I am a student.)',
-      blank: '한국어',
-      hint: 'Korean language'
+      question: 'Complete the sentence: "저는 ___ 입니다." (I am a student.)',
+      blank: '학생',
+      hint: 'Student'
     },
     {
       type: 'mcq',
@@ -1285,7 +1285,7 @@
   // Quiz State
   let currentQuestionIndex = 0;
   let score = 0;
-  let timer = 30;
+  let timer = 45;
   let timerInterval;
   let userAnswers = [];
   let draggedElement = null;
@@ -1523,7 +1523,7 @@
       input.classList.add('correct');
       score++;
       userAnswers[currentQuestionIndex] = true;
-      setTimeout(nextQuestion, 1500);
+setTimeout(nextQuestion, 3000);
     } else if (userAnswer.length > 0) {
       input.classList.add('incorrect');
       userAnswers[currentQuestionIndex] = false;
