@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>我的資源 — 已儲存的學習資源</title>
+<title>我的詞彙 — 已儲存的單字</title>
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   
@@ -40,13 +40,11 @@
       overflow-x: hidden;
     }
     
-    /* Header */
     .page-header {
-      background: linear-gradient(135deg, var(--secondary-color), #7eddd6);
+      background: linear-gradient(135deg, var(--primary-color), #ff8e8e);
       color: white;
       padding: 50px 24px 20px;
       text-align: center;
-      position: relative;
     }
     
     .page-header h1 {
@@ -55,12 +53,6 @@
       font-weight: 700;
     }
     
-    .page-header p {
-      font-size: 1rem;
-      opacity: 0.9;
-    }
-    
-    /* Empty State */
     .empty-state {
       text-align: center;
       padding: 60px 24px;
@@ -86,7 +78,7 @@
     
     .empty-state a {
       display: inline-block;
-      background: var(--secondary-color);
+      background: var(--primary-color);
       color: white;
       padding: 14px 32px;
       border-radius: 30px;
@@ -95,12 +87,11 @@
       font-weight: 600;
     }
     
-    /* Resources List */
-    .resources-list {
+    .vocab-list {
       padding: 20px;
     }
     
-    .resource-card {
+    .flashcard {
       background: white;
       border: 1px solid var(--gray-color);
       border-radius: 16px;
@@ -109,28 +100,23 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
     
-    .resource-type {
-      display: inline-block;
-      background: var(--secondary-color);
-      color: white;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-    
-    .resource-title {
-      font-size: 1.2rem;
+    .word-main {
+      font-size: 1.8rem;
       font-weight: 700;
       margin-bottom: 8px;
     }
     
-    .resource-desc {
-      font-size: 0.95rem;
+    .pronunciation {
+      font-size: 1rem;
       color: #666;
-      margin-bottom: 16px;
-      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+    
+    .meaning {
+      font-size: 1.2rem;
+      color: var(--primary-color);
+      font-weight: 600;
+      margin-bottom: 12px;
     }
     
     .card-actions {
@@ -163,20 +149,11 @@
       color: white;
     }
     
-    .action-btn.primary:hover {
-      background: #ff5252;
-    }
-    
     .action-btn.danger {
       background: #ff4757;
       color: white;
     }
     
-    .action-btn.danger:hover {
-      background: #ff3344;
-    }
-    
-    /* Footer */
     .page-footer {
       background: var(--dark-color);
       color: white;
@@ -191,7 +168,6 @@
       opacity: 0.8;
     }
     
-    /* Bottom Nav */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -232,26 +208,21 @@
 <body>
   <div class="mobile-container">
     
-    <!-- Header -->
     <header class="page-header">
-      <h1>我的資源</h1>
-      <p>已儲存的學習資源</p>
+      <h1>我的詞彙</h1>
+      <p>已儲存的單字</p>
     </header>
     
-    <!-- Resources List -->
-    <section class="resources-list" id="savedResources">
-      <!-- Saved resources will be loaded here -->
+    <section class="vocab-list" id="savedVocabList">
     </section>
     
-    <!-- Empty State (hidden by default) -->
     <div class="empty-state" id="emptyState" style="display: none;">
       <i class="fas fa-bookmark"></i>
-      <h3>還沒有儲存的資源</h3>
-      <p>去資源頁面儲存你喜歡的學習資源吧！</p>
-      <a href="Resources.html">前往資源頁面</a>
+      <h3>還沒有儲存的單字</h3>
+      <p>去詞彙頁面儲存你喜歡的單字吧！</p>
+      <a href="vocab.html">前往詞彙頁面</a>
     </div>
     
-    <!-- Footer -->
     <footer class="page-footer">
       <div class="footer-content">
         <p>&copy; 2026 K-City. All rights reserved.</p>
@@ -259,7 +230,6 @@
       </div>
     </footer>
     
-    <!-- Bottom Navigation -->
     <nav class="bottom-nav">
       <a href="index.html" class="nav-item">
         <div class="nav-icon">🏠</div>
@@ -281,61 +251,61 @@
         <div class="nav-icon">🌐</div>
         <div>資源</div>
       </a>
-      <a href="save.html" class="nav-item active">
-        <div class="nav-icon">💾</div>
-        <div>儲存</div>
-      </a>
       <a href="Community.html" class="nav-item">
         <div class="nav-icon">👥</div>
-        <div>社群</div>
+        <div>社區</div>
       </a>
     </nav>
     
   </div>
   
   <script>
-    // Load saved resources from localStorage
     document.addEventListener('DOMContentLoaded', function() {
-      const savedResources = JSON.parse(localStorage.getItem('savedResources') || '[]');
-      const resourcesContainer = document.getElementById('savedResources');
+      const savedVocab = JSON.parse(localStorage.getItem('savedVocab') || '[]');
+      const vocabContainer = document.getElementById('savedVocabList');
       const emptyState = document.getElementById('emptyState');
       
-      if (savedResources.length === 0) {
-        resourcesContainer.style.display = 'none';
+      if (savedVocab.length === 0) {
+        vocabContainer.style.display = 'none';
         emptyState.style.display = 'block';
       } else {
-        resourcesContainer.style.display = 'block';
+        vocabContainer.style.display = 'block';
         emptyState.style.display = 'none';
         
-        savedResources.forEach((resource, index) => {
+        savedVocab.forEach((vocab, index) => {
           const card = document.createElement('div');
-          card.className = 'resource-card';
+          card.className = 'flashcard';
           card.innerHTML = `
-            <div class="resource-type">${resource.type}</div>
-            <div class="resource-title">${resource.title}</div>
-            <div class="resource-desc">${resource.desc}</div>
+            <div class="word-main">${vocab.word}</div>
+            <div class="pronunciation">${vocab.pronunciation}</div>
+            <div class="meaning">${vocab.meaning}</div>
             <div class="card-actions">
-              <a href="${resource.link}" target="_blank" class="action-btn">
-                <i class="fas fa-external-link-alt"></i> 前往
-              </a>
-              <button class="action-btn danger" onclick="removeResource(${index})">
+              <button class="action-btn" onclick="speakWord('${vocab.word}')">
+                <i class="fas fa-volume-up"></i> 發音
+              </button>
+              <button class="action-btn danger" onclick="removeVocab(${index})">
                 <i class="fas fa-trash"></i> 刪除
               </button>
             </div>
           `;
-          resourcesContainer.appendChild(card);
+          vocabContainer.appendChild(card);
         });
       }
     });
     
-    // Remove resource function
-    function removeResource(index) {
-      if (confirm('確定要刪除這個資源嗎？')) {
-        const savedResources = JSON.parse(localStorage.getItem('savedResources') || '[]');
-        savedResources.splice(index, 1);
-        localStorage.setItem('savedResources', JSON.stringify(savedResources));
+    function removeVocab(index) {
+      if (confirm('確定要刪除這個單字嗎？')) {
+        const savedVocab = JSON.parse(localStorage.getItem('savedVocab') || '[]');
+        savedVocab.splice(index, 1);
+        localStorage.setItem('savedVocab', JSON.stringify(savedVocab));
         location.reload();
       }
+    }
+    
+    function speakWord(word) {
+      const utterance = new SpeechSynthesisUtterance(word);
+      utterance.lang = 'ko-KR';
+      speechSynthesis.speak(utterance);
     }
   </script>
 </body>

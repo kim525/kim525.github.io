@@ -1583,19 +1583,34 @@
     
     // Handle save vocab button clicks - standalone function
     function saveVocab(button) {
+      // Get the vocab card parent
+      const card = button.closest('.flashcard');
+      const word = card.querySelector('.word-main').textContent;
+      const meaning = card.querySelector('.meaning').textContent;
+      const pronunciation = card.querySelector('.pronunciation').textContent;
+      
+      // Get saved vocab from localStorage
+      let savedVocab = JSON.parse(localStorage.getItem('savedVocab') || '[]');
+      
       // Check if already saved
-      if (button.innerHTML.includes('已儲存')) {
+      if (savedVocab.some(v => v.word === word)) {
+        button.innerHTML = '<i class="fas fa-check"></i> ✅ 已儲存';
+        button.style.background = '#4caf50';
         return;
       }
       
+      // Add to saved list
+      savedVocab.push({ word, meaning, pronunciation, savedAt: new Date().toISOString() });
+      localStorage.setItem('savedVocab', JSON.stringify(savedVocab));
+      
       // Change button text to show checkmark
       button.innerHTML = '<i class="fas fa-check"></i> ✅ 已儲存';
-      button.style.background = '#4caf50'; // Green color for saved state
+      button.style.background = '#4caf50';
       
       // Reset after 3 seconds
       setTimeout(() => {
         button.innerHTML = '<i class="fas fa-bookmark"></i> 儲存';
-        button.style.background = ''; // Reset to original color
+        button.style.background = '';
       }, 3000);
     }
   });
