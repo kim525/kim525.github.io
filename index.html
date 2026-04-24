@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>首頁 — 歡迎來到 K-City</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  
+  <style>
+    :root {
+      --primary-color: #FF6B6B;
+      --secondary-color: #4ECDC4;
+      --dark-color: #2D3047;
+      --light-color: #F7F9FC;
+      --gray-color: #E9ECEF;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'PingFang TC', 'Microsoft JhengHei', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    body {
+      background-color: var(--light-color);
+      color: var(--dark-color);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    
+    .mobile-container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      min-height: 100vh;
+      box-shadow: 0 0 20px rgba(0,0,0,0.08);
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, rgba(255, 107, 107, 0.8) 0%, rgba(255, 142, 142, 0.8) 100%), 
+                  url('https://images.pexels.com/photos/19751380/pexels-photo-19751380.jpeg') center/cover no-repeat;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      padding: 24px;
+    }
+    
+    .hero h1 {
+      font-size: 2.8rem;
+      margin-bottom: 18px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    
+    .hero p {
+      font-size: 1.15rem;
+      opacity: 0.96;
+      max-width: 380px;
+      margin: 0 auto 36px;
+    }
+    
+    .hero-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .hero-credit {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      font-size: 0.8rem;
+      opacity: 0.8;
+      background: rgba(0,0,0,0.3);
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+    
+    .cta-btn {
+      background: white;
+      color: var(--primary-color);
+      border: none;
+      border-radius: 50px;
+      padding: 16px 40px;
+      font-size: 1.18rem;
+      font-weight: bold;
+      margin: 12px 10px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.16);
+      transition: all 0.28s;
+    }
+    
+    .cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+    }
+    
+    .cta-btn.secondary {
+      background: transparent;
+      color: white;
+      border: 2.5px solid white;
+    }
+    
+    /* Features */
+    .features {
+      padding: 44px 24px 36px;
+      background: white;
+    }
+    
+    .section-title {
+      font-size: 1.65rem;
+      font-weight: 700;
+      margin-bottom: 32px;
+      text-align: center;
+      color: var(--dark-color);
+    }
+    
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 22px;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    
+    .feature-card {
+      background: var(--light-color);
+      border-radius: 18px;
+      padding: 26px 18px;
+      text-align: center;
+      border: 1px solid var(--gray-color);
+      transition: all 0.28s;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.09);
+    }
+    
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 14px;
+      color: var(--primary-color);
+    }
+    
+    .feature-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+    }
+    
+    .feature-card p {
+      font-size: 0.94rem;
+      color: #555;
+    }
+    
+    /* Daily Quick Practice */
+    .daily-teaser {
+      margin: 0 24px 40px;
+      padding: 24px;
+      background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+      border-radius: 18px;
+      text-align: center;
+    }
+    
+    .daily-teaser h3 {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      color: #e65100;
+    }
+    
+    .daily-teaser p {
+      font-size: 1.05rem;
+      margin-bottom: 20px;
+    }
+    
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+      border-top: 1px solid var(--gray-color);
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.07);
+      z-index: 100;
+    }
+    
+    /* Footer */
+    .page-footer {
+      background: var(--dark-color);
+      color: white;
+      padding: 40px 24px 100px; /* Extra bottom padding to account for fixed nav */
+      text-align: center;
+      margin-top: 40px;
+    }
+    
+    .footer-content p {
+      margin: 8px 0;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+    
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #666;
+      font-size: 0.8rem;
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    
+    .nav-item.active {
+      color: var(--primary-color);
+    }
+    
+    .nav-icon {
+      font-size: 1.7rem;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-container">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>K-City</h1>
+      <p>透過互動式任務和真實場景，學最實用的韓文<br>10–25 分鐘專注任務、真實場景、IoT 加強練習</p>
+      
+      <a href="vocab.html" class="cta-btn" style="display: inline-block; text-decoration: none;">開始學習韓文</a>
+      <a href="vocab.html" class="cta-btn secondary" style="display: inline-block; text-decoration: none;">即刻試玩 10 分鐘</a>
+    </div>
+    
+    <div class="hero-credit">
+      Photo by Knipst@pexels.com
+    </div>
+  </section>
+
+  <!-- Quick Features -->
+  <section class="features">
+    <h2 class="section-title">核心功能一覽</h2>
+    
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🏗️</div>
+        <h3>進度解鎖模式</h3>
+        <p>學完就解鎖 → 內容開放 → 學習越來越深入</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">📍</div>
+        <h3>IoT 智慧學習</h3>
+        <p>附近地點觸發 + QR 掃描即學單字</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">🗣️</div>
+        <h3>語音實戰練習</h3>
+        <p>錄音比對 + AI 即時發音評分</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Daily Recommended Teaser -->
+  <div class="daily-teaser">
+    <h3>今日推薦快速練習</h3>
+    <p>根據你的位置與時間：點餐韓文 5 分鐘挑戰</p>
+    <a href="vocab.html#quiz" class="cta-btn" style="font-size:1.05rem; padding:14px 32px; display: inline-block; text-decoration: none;">馬上開始</a>
+  </div>
+
+  <!-- Footer -->
+  <footer class="page-footer">
+    <div class="footer-content">
+      <p>&copy; 2026 K-City. All rights reserved.</p>
+      <p>Learn Korean through interactive tasks and real-life scenarios!</p>
+    </div>
+  </footer>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item active">
+      <div class="nav-icon">🏠</div>
+      <div>首頁</div>
+    </a>
+    <a href="vocab.html" class="nav-item">
+      <div class="nav-icon">📚</div>
+      <div>詞彙</div>
+    </a>
+    <a href="Stats.html" class="nav-item">
+      <div class="nav-icon">📊</div>
+      <div>統計</div>
+    </a>
+    <a href="StudyHub.html" class="nav-item">
+      <div class="nav-icon">🔌</div>
+      <div>IoT</div>
+    </a>
+    <a href="Resources.html" class="nav-item">
+      <div class="nav-icon">🌐</div>
+      <div>資源</div>
+    </a>
+    <a href="Community.html" class="nav-item">
+      <div class="nav-icon">👥</div>
+      <div>社區</div>
+    </a>
+  </nav>
+
+</div>
+
+</body>
+</html>

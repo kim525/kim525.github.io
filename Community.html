@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>社區 — 一起學韓文</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  
+  <style>
+    :root {
+      --primary-color: #FF6B6B;
+      --secondary-color: #4ECDC4;
+      --dark-color: #2D3047;
+      --light-color: #F7F9FC;
+      --gray-color: #E9ECEF;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'PingFang TC', 'Microsoft JhengHei', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    body {
+      background-color: var(--light-color);
+      color: var(--dark-color);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    
+    .mobile-container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      min-height: 100vh;
+      box-shadow: 0 0 20px rgba(0,0,0,0.08);
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    /* Header */
+    .page-header {
+      background: linear-gradient(135deg, var(--primary-color), #ff8e8e);
+      color: white;
+      padding: 50px 24px 20px;
+      text-align: center;
+    }
+    
+    .page-header h1 {
+      font-size: 2.1rem;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    
+    /* Sections */
+    .section {
+      padding: 24px;
+    }
+    
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-align: center;
+      color: var(--dark-color);
+    }
+    
+    /* Group Cards */
+    .group-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    
+    .group-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+      border: 1px solid var(--gray-color);
+      transition: all 0.28s;
+      text-align: center;
+    }
+    
+    .group-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+    }
+    
+    .group-icon {
+      font-size: 3rem;
+      margin-bottom: 12px;
+      color: var(--primary-color);
+    }
+    
+    .group-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    
+    .group-desc {
+      font-size: 0.92rem;
+      color: #555;
+      margin-bottom: 16px;
+    }
+    
+    .join-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 24px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    
+    .join-btn:hover {
+      background: #ff5252;
+    }
+    
+    /* Events / Missions */
+    .events-list {
+      margin-bottom: 40px;
+    }
+    
+    .event-item {
+      background: var(--light-color);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      border-left: 5px solid var(--secondary-color);
+    }
+    
+    .event-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    
+    .event-info {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    /* Leaderboard Teaser */
+    .leaderboard-teaser {
+      background: linear-gradient(135deg, #fffde7, #fff9c4);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .leaderboard-teaser h3 {
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+      color: #f57f17;
+    }
+    
+    .rank-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--gray-color);
+    }
+    
+    /* Bottom Nav */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+      border-top: 1px solid var(--gray-color);
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.07);
+      z-index: 100;
+    }
+    
+    /* Footer */
+    .page-footer {
+      background: var(--dark-color);
+      color: white;
+      padding: 40px 24px 100px; /* Extra bottom padding to account for fixed nav */
+      text-align: center;
+      margin-top: 40px;
+    }
+    
+    .footer-content p {
+      margin: 8px 0;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+    
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #666;
+      font-size: 0.8rem;
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    
+    .nav-item.active {
+      color: var(--primary-color);
+    }
+    
+    .nav-icon {
+      font-size: 1.7rem;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-container">
+
+  <!-- Header -->
+  <header class="page-header">
+    <h1>社區</h1>
+  </header>
+
+  <!-- Join Options -->
+  <div class="section">
+    <h2 class="section-title">加入學習小組</h2>
+    
+    <div class="group-grid">
+      <div class="group-card">
+        <div class="group-icon">👥</div>
+        <div class="group-name">香港韓文日常交流組</div>
+        <div class="group-desc">每日分享韓劇台詞、互相糾正發音</div>
+        <a href="https://chat.whatsapp.com/YOUR_GROUP_LINK_HERE" target="_blank" class="join-btn" style="display: inline-block; text-decoration: none;"><i class="fab fa-whatsapp" style="margin-right: 8px;"></i>加入 WhatsApp 群組</a>
+      </div>
+      
+      <div class="group-card">
+        <div class="group-icon">🏙️</div>
+        <div class="group-name">學習進度分享組</div>
+        <div class="group-desc">一起分享學習心得、互相鼓勵進步</div>
+        <a href="https://instagram.com/YOUR_INSTAGRAM_GROUP_HERE" target="_blank" class="join-btn" style="display: inline-block; text-decoration: none;"><i class="fab fa-instagram" style="margin-right: 8px;"></i>加入 Instagram 群組</a>
+      </div>
+      
+      <div class="group-card">
+        <div class="group-icon">🎤</div>
+        <div class="group-name">語音交換夥伴</div>
+        <div class="group-desc">每週語音通話練習會話</div>
+        <a href="https://discord.gg/YOUR_DISCORD_INVITE" target="_blank" class="join-btn" style="display: inline-block; text-decoration: none;"><i class="fab fa-discord" style="margin-right: 8px;"></i>加入 Discord 語音群組</a>
+      </div>
+      
+      <div class="group-card">
+        <div class="group-icon">🔗</div>
+        <div class="group-name">NFC 快速加入</div>
+        <div class="group-desc">靠近朋友手機 → 即時加入小組</div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button class="join-btn" style="flex: 1; min-width: 120px;"><i class="fas fa-nfc-symbol"></i> 掃描 NFC</button>
+          <button class="join-btn" style="flex: 1; min-width: 120px; background: #25d366;"><i class="fas fa-qrcode"></i> 掃描 QR 碼</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Weekly Missions / Events -->
+  <div class="section events-list">
+    <h2 class="section-title">本週文化任務 & 活動</h2>
+    
+    <div class="event-item">
+      <div class="event-title">韓食點餐挑戰</div>
+      <div class="event-info">用韓文點一份虛擬餐廳菜單，錄音上傳 → 完成得學習積分</div>
+      <div class="event-info">截止：本週日晚上</div>
+    </div>
+    
+    <div class="event-item">
+      <div class="event-title">K-pop 歌詞翻譯接龍</div>
+      <div class="event-info">大家輪流翻譯一首歌的副歌 → 最準確者上排行榜</div>
+      <div class="event-info">每週三晚上直播討論</div>
+    </div>
+    
+    <div class="event-item">
+      <div class="event-title">學習里程碑慶祝</div>
+      <div class="event-info">小組一起完成學習目標 → 集體慶祝進步</div>
+      <div class="event-info">本週六 8pm 線上聚會</div>
+    </div>
+  </div>
+
+  <!-- Leaderboard Teaser -->
+  <div class="leaderboard-teaser">
+    <h3>本週排行榜 Top 3</h3>
+    
+    <div class="rank-item">
+      <span>1. @kcity_master</span>
+      <span>學習等級 18 • 12,450 積分</span>
+    </div>
+    <div class="rank-item">
+      <span>2. @seoul_builder</span>
+      <span>學習等級 17 • 11,200 積分</span>
+    </div>
+    <div class="rank-item">
+      <span>3. @hangul_lover</span>
+      <span>學習等級 16 • 10,800 積分</span>
+    </div>
+    
+    <button class="join-btn" style="margin-top:20px; background:#4caf50;">查看完整排行</button>
+  </div>
+
+  <!-- Footer -->
+  <footer class="page-footer">
+    <div class="footer-content">
+      <p>&copy; 2026 K-Learn. All rights reserved.</p>
+      <p>Learn Korean through interactive tasks and real-life scenarios!</p>
+    </div>
+  </footer>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <div class="nav-icon">🏠</div>
+      <div>首頁</div>
+    </a>
+    <a href="vocab.html" class="nav-item">
+      <div class="nav-icon">📚</div>
+      <div>詞彙</div>
+    </a>
+    <a href="Stats.html" class="nav-item">
+      <div class="nav-icon">📊</div>
+      <div>統計</div>
+    </a>
+    <a href="StudyHub.html" class="nav-item">
+      <div class="nav-icon">🔌</div>
+      <div>IoT</div>
+    </a>
+    <a href="Resources.html" class="nav-item">
+      <div class="nav-icon">🌐</div>
+      <div>資源</div>
+    </a>
+    <a href="Community.html" class="nav-item active">
+      <div class="nav-icon">👥</div>
+      <div>社區</div>
+    </a>
+  </nav>
+
+</div>
+
+<script>
+  // QR Code Scanner functionality
+  function initQRScanner() {
+    const qrScanBtn = document.querySelector('.join-btn[style*="background: #25d366"]');
+    
+    if (qrScanBtn) {
+      qrScanBtn.addEventListener('click', function() {
+        // Check if device supports camera
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          alert('您的裝置不支援相機功能，無法掃描 QR 碼。');
+          return;
+        }
+        
+        // Create QR scanner modal
+        const modal = document.createElement('div');
+        modal.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0,0,0,0.8);
+          z-index: 10000;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        `;
+        
+        const scannerContainer = document.createElement('div');
+        scannerContainer.style.cssText = `
+          background: white;
+          border-radius: 16px;
+          padding: 20px;
+          max-width: 90%;
+          width: 400px;
+          text-align: center;
+        `;
+        
+        scannerContainer.innerHTML = `
+          <h3 style="margin-bottom: 16px; color: #333;">掃描 QR 碼加入群組</h3>
+          <div style="position: relative; margin-bottom: 16px;">
+            <video id="qrVideo" style="width: 100%; border-radius: 8px;" autoplay></video>
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 200px; height: 200px; border: 2px solid #25d366; border-radius: 8px; box-shadow: 0 0 0 2000px rgba(0,0,0,0.3);"></div>
+          </div>
+          <p style="color: #666; font-size: 14px; margin-bottom: 16px;">將 QR 碼置於框內即可自動掃描</p>
+          <button id="closeScanner" style="background: #ff6b6b; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer;">取消掃描</button>
+        `;
+        
+        modal.appendChild(scannerContainer);
+        document.body.appendChild(modal);
+        
+        // Start camera
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+          .then(function(stream) {
+            const video = document.getElementById('qrVideo');
+            video.srcObject = stream;
+            
+            // Mock QR code detection (in real implementation, you'd use a QR library)
+            setTimeout(() => {
+              stream.getTracks().forEach(track => track.stop());
+              modal.remove();
+              alert('成功掃描！已加入學習群組。');
+            }, 3000);
+          })
+          .catch(function(err) {
+            console.error('Error accessing camera:', err);
+            alert('無法存取相機，請檢查權限設定。');
+            modal.remove();
+          });
+        
+        // Close scanner
+        document.getElementById('closeScanner').addEventListener('click', function() {
+          const video = document.getElementById('qrVideo');
+          if (video && video.srcObject) {
+            video.srcObject.getTracks().forEach(track => track.stop());
+          }
+          modal.remove();
+        });
+      });
+    }
+  }
+  
+  // Initialize when page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    initQRScanner();
+  });
+</script>
+
+</body>
+</html>
