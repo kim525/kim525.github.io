@@ -1,7 +1,1670 @@
+<!DOCTYPE html>
+<!-- saved from url=(0063)file:///Users/gankim/Downloads/kim525.github.io-main/vocab.html -->
+<html lang="zh-HK"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>詞彙 — 清單 &amp; 記憶卡</title>
+  
+  <link rel="stylesheet" href="./vocab_files/all.min.css">
+  
+  <style>
+    :root {
+      --primary-color: #FF6B6B;
+      --secondary-color: #4ECDC4;
+      --dark-color: #2D3047;
+      --light-color: #F7F9FC;
+      --gray-color: #E9ECEF;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'PingFang TC', 'Microsoft JhengHei', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    body {
+      background-color: var(--light-color);
+      color: var(--dark-color);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    
+    .mobile-container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      min-height: 100vh;
+      box-shadow: 0 0 20px rgba(0,0,0,0.08);
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    /* Header / Search */
+    .page-header {
+      background: linear-gradient(135deg, var(--primary-color), #ff8e8e);
+      color: white;
+      padding: 50px 24px 20px;
+      text-align: center;
+      position: relative;
+    }
+    
+    .page-header h1 {
+      font-size: 2.1rem;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    
+    .search-bar {
+      background: white;
+      border-radius: 50px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      margin: 0 16px 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .search-bar input {
+      border: none;
+      flex: 1;
+      font-size: 1rem;
+      outline: none;
+    }
+    
+    .search-bar i {
+      color: var(--primary-color);
+      margin-right: 12px;
+    }
+    
+    /* Category Tabs */
+    .category-tabs {
+      display: flex;
+      overflow-x: auto;
+      padding: 0 20px 16px;
+      gap: 12px;
+      background: white;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--gray-color);
+    }
+    
+    .tab-btn {
+      background: var(--light-color);
+      border: 1px solid var(--gray-color);
+      border-radius: 30px;
+      padding: 10px 20px;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    
+    .tab-btn.active {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+    
+    /* Flashcard List */
+    .vocab-list {
+      padding: 20px 24px;
+    }
+    
+    .flashcard {
+      background: white;
+      border-radius: 16px;
+      padding: 24px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+      border: 1px solid var(--gray-color);
+      transition: transform 0.5s, box-shadow 0.28s;
+      transform-style: preserve-3d;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .flashcard.flipped {
+      transform: rotateY(180deg);
+    }
+    
+    .flashcard-front, .flashcard-back {
+      backface-visibility: hidden;
+      transition: all 0.28s;
+    }
+    
+    .flashcard-back {
+      position: absolute;
+      top: 24px;
+      left: 20px;
+      right: 20px;
+      transform: rotateY(180deg);
+    }
+    
+    .flashcard.flipped .flashcard-front {
+      opacity: 0;
+    }
+    
+    .flashcard.flipped .flashcard-back {
+      transform: rotateY(180deg);
+    }
+    
+    .flashcard:not(.flipped) .flashcard-back {
+      opacity: 0;
+    }
+    
+    .flashcard:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.1);
+    }
+    
+    .flashcard.flipped:hover {
+      transform: rotateY(180deg) translateY(-4px);
+    }
+    
+    .flip-hint {
+      font-size: 0.85rem;
+      color: #999;
+      text-align: center;
+      margin-top: 12px;
+    }
+    
+    .meaning {
+      font-size: 1.25rem;
+      color: var(--primary-color);
+      margin: 16px 0 12px;
+      font-weight: 600;
+    }
+    
+    .back-example {
+      font-size: 0.98rem;
+      color: #444;
+      line-height: 1.5;
+    }
+    
+    .word-main {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--dark-color);
+    }
+    
+    .pronunciation {
+      font-size: 1.15rem;
+      color: #666;
+      margin-bottom: 12px;
+    }
+    
+    .meaning {
+      font-size: 1.25rem;
+      color: var(--primary-color);
+      margin: 16px 0 12px;
+      font-weight: 600;
+    }
+    
+    .example {
+      font-size: 0.98rem;
+      color: #444;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    
+    .card-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    
+    .action-btn {
+      background: var(--light-color);
+      border: 1px solid var(--gray-color);
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .action-btn.primary {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+    }
+    
+    .action-btn i {
+      margin-right: 6px;
+    }
+    
+    /* SRS Teaser */
+    .srs-teaser {
+      margin: 32px 24px;
+      padding: 24px;
+      background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+      border-radius: 16px;
+      text-align: center;
+    }
+    
+    .srs-teaser h3 {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      color: #2e7d32;
+    }
+    
+    /* Bottom Nav (same as home) */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+      border-top: 1px solid var(--gray-color);
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.07);
+      z-index: 100;
+    }
+    
+    /* Quiz Section */
+    .quiz-section {
+      padding: 32px 24px;
+      background: var(--light-color);
+    }
+    
+    .quiz-container {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    
+    .quiz-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    
+    .quiz-progress {
+      flex: 1;
+      margin-right: 16px;
+    }
+    
+    .progress-bar {
+      background: var(--gray-color);
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    
+    .progress-fill {
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    
+    .progress-text {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    .quiz-timer {
+      display: flex;
+      align-items: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+    
+    .quiz-timer i {
+      margin-right: 8px;
+    }
+    
+    .question-container {
+      margin-bottom: 24px;
+    }
+    
+    .question {
+      margin-bottom: 20px;
+    }
+    
+    .question-text {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: var(--dark-color);
+    }
+    
+    /* MCQ Styles */
+    .mcq-options {
+      display: grid;
+      gap: 12px;
+    }
+    
+    .mcq-option {
+      background: var(--light-color);
+      border: 2px solid var(--gray-color);
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+      font-size: 1rem;
+    }
+    
+    .mcq-option:hover {
+      border-color: var(--primary-color);
+      background: #fff5f5;
+    }
+    
+    .mcq-option.selected {
+      border-color: var(--primary-color);
+      background: #fff5f5;
+    }
+    
+    .mcq-option.correct {
+      border-color: #4caf50;
+      background: #e8f5e9;
+    }
+    
+    .mcq-option.incorrect {
+      border-color: #f44336;
+      background: #ffebee;
+    }
+    
+    /* Fill-in-blank Styles */
+    .fill-blank-container {
+      position: relative;
+    }
+    
+    .fill-blank-text {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    
+    .blank-input {
+      border: 2px solid var(--gray-color);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 1rem;
+      width: 120px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    
+    .blank-input:focus {
+      border-color: var(--primary-color);
+      outline: none;
+    }
+    
+    .blank-input.correct {
+      border-color: #4caf50;
+      background: #e8f5e9;
+    }
+    
+    .blank-input.incorrect {
+      border-color: #f44336;
+      background: #ffebee;
+    }
+    
+    .hint-text {
+      position: absolute;
+      top: -30px;
+      left: 0;
+      background: var(--dark-color);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+    
+    .blank-input:hover + .hint-text {
+      opacity: 1;
+    }
+    
+    /* Matching Game Styles */
+    .matching-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    
+    .matching-column {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .matching-item {
+      background: var(--light-color);
+      border: 2px solid var(--gray-color);
+      border-radius: 12px;
+      padding: 16px;
+      cursor: grab;
+      transition: all 0.2s;
+      text-align: center;
+      font-size: 1rem;
+      user-select: none;
+    }
+    
+    .matching-item:hover {
+      border-color: var(--primary-color);
+      background: #fff5f5;
+    }
+    
+    .matching-item.dragging {
+      opacity: 0.5;
+      transform: rotate(5deg);
+    }
+    
+    .matching-item.correct {
+      border-color: #4caf50;
+      background: #e8f5e9;
+    }
+    
+    .matching-item.incorrect {
+      border-color: #f44336;
+      background: #ffebee;
+    }
+    
+    .drop-zone {
+      min-height: 60px;
+      border: 2px dashed var(--gray-color);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    
+    .drop-zone.hover {
+      border-color: var(--primary-color);
+      background: #fff5f5;
+    }
+    
+    .quiz-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 24px;
+    }
+    
+    .quiz-btn {
+      background: var(--light-color);
+      border: 1px solid var(--gray-color);
+      border-radius: 12px;
+      padding: 12px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .quiz-btn:hover:not(:disabled) {
+      border-color: var(--primary-color);
+      background: #fff5f5;
+    }
+    
+    .quiz-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .quiz-btn.primary {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+    }
+    
+    .quiz-btn.secondary {
+      background: var(--secondary-color);
+      color: white;
+      border: none;
+    }
+    
+    .quiz-results {
+      text-align: center;
+      padding: 24px;
+    }
+    
+    .quiz-results h3 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: var(--dark-color);
+    }
+    
+    .score-display {
+      margin: 20px 0;
+    }
+    
+    .score-circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      color: white;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+    
+    .score-total {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+    
+    /* Audio Section */
+    .audio-section {
+      padding: 32px 24px;
+      background: #fff9f5;
+    }
+    
+    .audio-card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    
+    .audio-player {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    
+    .audio-btn {
+      background: var(--light-color);
+      border: 1px solid var(--gray-color);
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--dark-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .audio-btn:hover {
+      border-color: var(--primary-color);
+      background: #fff5f5;
+    }
+    
+    .audio-btn.secondary {
+      background: var(--secondary-color);
+      color: white;
+      border: none;
+    }
+    
+    .speed-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #555;
+      min-width: 170px;
+    }
+    
+    .speed-control label {
+      font-size: 0.95rem;
+    }
+    
+    .speed-control select {
+      border: 1px solid var(--gray-color);
+      border-radius: 12px;
+      padding: 8px 10px;
+      background: white;
+      color: var(--dark-color);
+    }
+    
+    .audio-meta {
+      font-size: 0.95rem;
+      color: #444;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+    
+    .audio-meta strong {
+      color: var(--dark-color);
+    }
+    
+    .transcript-toggle {
+      margin-bottom: 18px;
+    }
+    
+    .transcript-panel {
+      background: #f7f4ff;
+      border: 1px solid var(--gray-color);
+      border-radius: 14px;
+      padding: 18px;
+      overflow: hidden;
+    }
+    
+    .transcript-text {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+    
+    .transcript-text span {
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.9);
+      transition: background 0.2s, color 0.2s;
+    }
+    
+    .transcript-text span.active {
+      background: var(--primary-color);
+      color: white;
+      box-shadow: 0 4px 12px rgba(255,107,107,0.24);
+    }
+    
+    .transcript-hint {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    /* Footer */
+    .page-footer {
+      background: var(--dark-color);
+      color: white;
+      padding: 40px 24px 100px; /* Extra bottom padding to account for fixed nav */
+      text-align: center;
+      margin-top: 40px;
+    }
+    
+    .footer-content p {
+      margin: 8px 0;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+    
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #666;
+      font-size: 0.8rem;
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    
+    .nav-item.active {
+      color: var(--primary-color);
+    }
+    
+    .nav-icon {
+      font-size: 1.7rem;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-container">
+
+  <!-- Header + Search -->
+  <header class="page-header">
+    <h1>詞彙庫</h1>
+    
+    <div class="search-bar">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="搜尋單字或例句...">
+    </div>
+  </header>
+
+  <!-- Category Tabs -->
+  <div class="category-tabs">
+    <button class="tab-btn active">全部</button>
+    <button class="tab-btn">飲食</button>
+    <button class="tab-btn">交通</button>
+    <button class="tab-btn">購物</button>
+    <button class="tab-btn">問候</button>
+    <button class="tab-btn">日常</button>
+  </div>
+
+  <!-- Vocab List -->
+  <section class="vocab-list">
+    <div class="flashcard flipped" onclick="this.classList.toggle(&#39;flipped&#39;)" style="display: block;">
+      <div class="flashcard-front">
+        <div class="word-main">된장찌개</div>
+        <div class="pronunciation">doen-jang-jji-gae</div>
+        <div class="example">저는 된장찌개가 제일 좋아해요.<br>（我最喜歡大醬湯。）</div>
+        <div class="card-actions">
+          <button class="action-btn play-sound-btn" data-word="된장찌개"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
+        </div>
+        <div class="flip-hint">點擊查看中文意思</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="meaning">大醬湯</div>
+        <div class="back-example">저는 된장찌개가 제일 좋아해요.<br>（我最喜歡大醬湯。）</div>
+      </div>
+    </div>
+
+<div class="flashcard" onclick="this.classList.toggle(&#39;flipped&#39;)" style="display: block;">
+      <div class="flashcard-front">
+        <div class="word-main">지하철</div>
+        <div class="pronunciation">ji-ha-cheol</div>
+        <div class="example">지하철 2호선에서 내려주세요.<br>（請在2號線下车。）</div>
+        <div class="card-actions">
+          <button class="action-btn play-sound-btn" data-word="지하철"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
+        </div>
+        <div class="flip-hint">點擊查看中文意思</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="meaning">地鐵</div>
+        <div class="back-example">지하철 2호선에서 내려주세요.<br>（請在2號線下车。）</div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle(&#39;flipped&#39;)" style="display: block;">
+      <div class="flashcard-front">
+        <div class="word-main">감사합니다</div>
+        <div class="pronunciation">gam-sa-ham-ni-da</div>
+        <div class="example">도와줘서 정말 감사합니다!<br>（真的很謝謝你幫忙！）</div>
+        <div class="card-actions">
+          <button class="action-btn play-sound-btn" data-word="감사합니다"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
+        </div>
+        <div class="flip-hint">點擊查看中文意思</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="meaning">謝謝</div>
+        <div class="back-example">도와줘서 정말 감사합니다!<br>（真的很謝謝你幫忙！）</div>
+      </div>
+    </div>
+
+    <!-- 飲食 (Food) -->
+    <div class="flashcard" onclick="this.classList.toggle(&#39;flipped&#39;)" style="display: block;">
+      <div class="flashcard-front">
+        <div class="word-main">김치</div>
+        <div class="pronunciation">gim-chi</div>
+        <div class="example">한국의 대표 음식은 김치입니다.<br>（韓國的代表食物是泡菜。）</div>
+        <div class="card-actions">
+          <button class="action-btn play-sound-btn" data-word="김치"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
+        </div>
+        <div class="flip-hint">點擊查看中文意思</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="meaning">泡菜</div>
+        <div class="back-example">한국의 대표 음식은 김치입니다.<br>（韓國的代表食物是泡菜。）</div>
+      </div>
+    </div>
+
+    <!-- 交通 (Transportation) -->
+<div class="flashcard" onclick="this.classList.toggle(&#39;flipped&#39;)" style="display: block;">
+      <div class="flashcard-front">
+        <div class="word-main">버스</div>
+        <div class="pronunciation">beo-seu</div>
+        <div class="example">버스로 학교에 가요.<br>（我搭公車去學校。）</div>
+        <div class="card-actions">
+          <button class="action-btn play-sound-btn" data-word="버스"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
+        </div>
+        <div class="flip-hint">點擊查看中文意思</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="meaning">公車</div>
+        <div class="back-example">버스로 학교에 가요.<br>（我搭公車去學校。）</div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle(&#39;flipped&#39;)" style="display: block;">
+      <div class="flashcard-front">
+        <div class="word-main">택시</div>
+        <div class="pronunciation">taek-si</div>
+        <div class="example">택시를 타고 갈게요.<br>（我要搭計程車去。）</div>
+        <div class="card-actions">
+          <button class="action-btn play-sound-btn" data-word="택시"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
+        </div>
+        <div class="flip-hint">點擊查看中文意思</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="meaning">計程車</div>
+        <div class="back-example">택시를 타고 갈게요.<br>（我要搭計程車去。）</div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle(&#39;flipped&#39;)" style="display: block;">
+      <div class="flashcard-front">
+        <div class="word-main">비행기</div>
+        <div class="pronunciation">bi-haeng-gi</div>
+        <div class="example">비행기로 한국에 왔어요.<br>（我搭飛機來韓國。）</div>
+        <div class="card-actions">
+          <button class="action-btn play-sound-btn" data-word="비행기"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
+        </div>
+        <div class="flip-hint">點擊查看中文意思</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="meaning">飛機</div>
+        <div class="back-example">비행기로 한국에 왔어요.<br>（我搭飛機來韓國。）</div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle(&#39;flipped&#39;)" style="display: block;">
+      <div class="flashcard-front">
+        <div class="word-main">자전거</div>
+        <div class="pronunciation">ja-jeon-geo</div>
+        <div class="example">자전거를 타고 다니는 게 좋아요.<br>（騎腳踏車四處走走很好。）</div>
+        <div class="card-actions">
+          <button class="action-btn play-sound-btn" data-word="자전거"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
+        </div>
+        <div class="flip-hint">點擊查看中文意思</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="meaning">腳踏車</div>
+        <div class="back-example">자전거를 타고 다니는 게 좋아요.<br>（騎腳踏車四處走走很好。）</div>
+      </div>
+    </div>
+
+<!-- 購物 (Shopping) -->
+    <div class="flashcard" onclick="this.classList.toggle(&#39;flipped&#39;)" style="display: block;">
+      <div class="flashcard-front">
+        <div class="word-main">시장</div>
+        <div class="pronunciation">si-jang</div>
+        <div class="example">시장에서 과일을 사요.<br>（我在市場買水果。）</div>
+        <div class="card-actions">
+          <button class="action-btn play-sound-btn" data-word="시장"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
+        </div>
+        <div class="flip-hint">點擊查看中文意思</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="meaning">市場</div>
+        <div class="back-example">시장에서 과일을 사요.<br>（我在市場買水果。）</div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle(&#39;flipped&#39;)" style="display: block;">
+      <div class="flashcard-front">
+        <div class="word-main">가격</div>
+        <div class="pronunciation">ga-gyeok</div>
+        <div class="example">이 옷의 가격은 얼마예요?<br>（這件衣服的價格是多少？）</div>
+        <div class="card-actions">
+          <button class="action-btn play-sound-btn" data-word="가격"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
+        </div>
+        <div class="flip-hint">點擊查看中文意思</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="meaning">價格</div>
+        <div class="back-example">이 옷의 가격은 얼마예요?<br>（這件衣服的價格是多少？）</div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle(&#39;flipped&#39;)" style="display: block;">
+      <div class="flashcard-front">
+        <div class="word-main">할인</div>
+        <div class="pronunciation">hal-in</div>
+        <div class="example">오늘은 할인 기간이에요.<br>（今天是折扣期間。）</div>
+        <div class="card-actions">
+          <button class="action-btn play-sound-btn" data-word="할인"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
+        </div>
+        <div class="flip-hint">點擊查看中文意思</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="meaning">折扣</div>
+        <div class="back-example">오늘은 할인 기간이에요.<br>（今天是折扣期間。）</div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle(&#39;flipped&#39;)" style="display: block;">
+      <div class="flashcard-front">
+        <div class="word-main">현금</div>
+        <div class="pronunciation">hyeon-geum</div>
+        <div class="example">현금으로 계산할게요.<br>（我要用現金結帳。）</div>
+        <div class="card-actions">
+          <button class="action-btn play-sound-btn" data-word="현금"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
+        </div>
+        <div class="flip-hint">點擊查看中文意思</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="meaning">現金</div>
+        <div class="back-example">현금으로 계산할게요.<br>（我要用現金結帳。）</div>
+      </div>
+    </div>
+
+    <!-- 問候 (Greetings) -->
+    <div class="flashcard" onclick="this.classList.toggle(&#39;flipped&#39;)" style="display: block;">
+      <div class="flashcard-front">
+        <div class="word-main">안녕하세요</div>
+        <div class="pronunciation">an-nyeong-ha-se-yo</div>
+        <div class="example">안녕하세요, 만나서 반가워요.<br>（您好，很高興見到您。）</div>
+        <div class="card-actions">
+          <button class="action-btn play-sound-btn" data-word="안녕하세요"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
+        </div>
+        <div class="flip-hint">點擊查看中文意思</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="meaning">您好</div>
+        <div class="back-example">안녕하세요, 만나서 반가워요.<br>（您好，很高興見到您。）</div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle(&#39;flipped&#39;)" style="display: block;">
+      <div class="flashcard-front">
+        <div class="word-main">안녕히 가세요</div>
+        <div class="pronunciation">an-nyeong-hi ga-se-yo</div>
+        <div class="example">안녕히 가세요, 내일 봐요.<br>（再見，明天見。）</div>
+        <div class="card-actions">
+          <button class="action-btn play-sound-btn" data-word="안녕히 가세요"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
+        </div>
+        <div class="flip-hint">點擊查看中文意思</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="meaning">再見</div>
+        <div class="back-example">안녕히 가세요, 내일 봐요.<br>（再見，明天見。）</div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle(&#39;flipped&#39;)" style="display: block;">
+      <div class="flashcard-front">
+        <div class="word-main">실례합니다</div>
+        <div class="pronunciation">shil-lye-ham-ni-da</div>
+        <div class="example">실례합니다, 화장실이 어디예요?<br>（抱歉，洗手間在哪裡？）</div>
+        <div class="card-actions">
+          <button class="action-btn play-sound-btn" data-word="실례합니다"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
+        </div>
+        <div class="flip-hint">點擊查看中文意思</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="meaning">抱歉</div>
+        <div class="back-example">실례합니다, 화장실이 어디예요?<br>（抱歉，洗手間在哪裡？）</div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle(&#39;flipped&#39;)" style="display: block;">
+      <div class="flashcard-front">
+        <div class="word-main">미안합니다</div>
+        <div class="pronunciation">mi-an-ham-ni-da</div>
+        <div class="example">늦어서 미안합니다.<br>（對不起，我遲到了。）</div>
+        <div class="card-actions">
+          <button class="action-btn play-sound-btn" data-word="미안합니다"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
+        </div>
+        <div class="flip-hint">點擊查看中文意思</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="meaning">對不起</div>
+        <div class="back-example">늦어서 미안합니다.<br>（對不起，我遲到了。）</div>
+      </div>
+    </div>
+
+<!-- 日常 (Daily Life) -->
+    <div class="flashcard" onclick="this.classList.toggle(&#39;flipped&#39;)" style="display: block;">
+      <div class="flashcard-front">
+        <div class="word-main">집</div>
+        <div class="pronunciation">jip</div>
+        <div class="example">집에 가고 싶어요.<br>（我想回家。）</div>
+        <div class="card-actions">
+          <button class="action-btn play-sound-btn" data-word="집"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
+        </div>
+        <div class="flip-hint">點擊查看中文意思</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="meaning">家</div>
+        <div class="back-example">집에 가고 싶어요.<br>（我想回家。）</div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle(&#39;flipped&#39;)" style="display: block;">
+      <div class="flashcard-front">
+        <div class="word-main">학교</div>
+        <div class="pronunciation">hak-gyo</div>
+        <div class="example">학교에서 한국어를 배워요.<br>（我在學校學韓語。）</div>
+        <div class="card-actions">
+          <button class="action-btn play-sound-btn" data-word="학교"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
+        </div>
+        <div class="flip-hint">點擊查看中文意思</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="meaning">學校</div>
+        <div class="back-example">학교에서 한국어를 배워요.<br>（我在學校學韓語。）</div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle(&#39;flipped&#39;)" style="display: block;">
+      <div class="flashcard-front">
+        <div class="word-main">친구</div>
+        <div class="pronunciation">chin-gu</div>
+        <div class="example">친구와 영화를 봤어요.<br>（我和朋友看了電影。）</div>
+        <div class="card-actions">
+          <button class="action-btn play-sound-btn" data-word="친구"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
+        </div>
+        <div class="flip-hint">點擊查看中文意思</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="meaning">朋友</div>
+        <div class="back-example">친구와 영화를 봤어요.<br>（我和朋友看了電影。）</div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle(&#39;flipped&#39;)" style="display: block;">
+      <div class="flashcard-front">
+        <div class="word-main">시간</div>
+        <div class="pronunciation">si-gan</div>
+        <div class="example">지금 몇 시예요?<br>（現在幾點？）</div>
+        <div class="card-actions">
+          <button class="action-btn play-sound-btn" data-word="시간"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
+        </div>
+        <div class="flip-hint">點擊查看中文意思</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="meaning">時間</div>
+        <div class="back-example">지금 몇 시예요?<br>（現在幾點？）</div>
+      </div>
+    </div>
+
+    <div class="flashcard" onclick="this.classList.toggle(&#39;flipped&#39;)" style="display: block;">
+      <div class="flashcard-front">
+        <div class="word-main">날씨</div>
+        <div class="pronunciation">nal-ssi</div>
+        <div class="example">오늘 날씨가 좋아요.<br>（今天天氣很好。）</div>
+        <div class="card-actions">
+          <button class="action-btn play-sound-btn" data-word="날씨"><i class="fas fa-volume-up"></i> 發音</button>
+          <button class="action-btn primary save-vocab-btn" onclick="saveVocab(this)"><i class="fas fa-bookmark"></i> 儲存</button>
+        </div>
+        <div class="flip-hint">點擊查看中文意思</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="meaning">天氣</div>
+        <div class="back-example">오늘 날씨가 좋아요.<br>（今天天氣很好。）</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quiz Section -->
+  <section class="quiz-section" id="quiz">
+    <h2 class="section-title">📝 詞彙小測驗</h2>
+    
+    <div class="quiz-container">
+      <div class="quiz-header">
+        <div class="quiz-progress">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 54.5455%;"></div>
+          </div>
+          <span class="progress-text"><span id="currentQuestion">6</span>/10</span>
+        </div>
+        <div class="quiz-timer">
+          <i class="fas fa-clock"></i>
+          <span id="timer">00:10</span>
+        </div>
+      </div>
+      
+      <div class="question-container" id="questionContainer"><div class="question">
+        <div class="question-text">How do you ask "What do you recommend?" when ordering food in Korean?</div>
+        <div class="mcq-options">
+          <div class="mcq-option" data-index="0">뭐 먹을래요?</div><div class="mcq-option" data-index="1">뭐가 맛있어요?</div><div class="mcq-option" data-index="2">여기 뭐예요?</div><div class="mcq-option" data-index="3">주문할게요</div>
+        </div>
+      </div></div>
+      
+      <div class="quiz-controls">
+        <button class="quiz-btn" id="prevBtn"><i class="fas fa-arrow-left"></i> 上一題</button>
+        <button class="quiz-btn primary" id="nextBtn" style="display: flex;">下一題 <i class="fas fa-arrow-right"></i></button>
+        <button class="quiz-btn secondary" id="submitBtn" style="display:none;">提交答案</button>
+      </div>
+      
+      <div class="quiz-results" id="quizResults" style="display:none;">
+        <h3>測驗完成！</h3>
+        <div class="score-display">
+          <div class="score-circle">
+            <span id="finalScore">0</span>
+            <span class="score-total">/10</span>
+          </div>
+          <p id="scoreMessage"></p>
+        </div>
+        <button class="quiz-btn primary" id="restartBtn">重新測驗</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Audio Section -->
+  <section class="audio-section">
+    <h2 class="section-title">🎧 發音 &amp; 聽力練習</h2>
+    <div class="audio-card">
+      <div class="audio-player">
+        <button class="audio-btn" id="playPauseBtn"><i class="fas fa-play"></i> 播放</button>
+        <div class="speed-control">
+          <label for="speedSelect">播放速度</label>
+          <select id="speedSelect">
+            <option value="0.75">0.75x</option>
+            <option value="1" selected="">1x</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5">1.5x</option>
+          </select>
+        </div>
+        <button class="audio-btn secondary" id="repeatBtn"><i class="fas fa-redo"></i> 重複</button>
+      </div>
+      <div class="audio-meta">
+        <div><strong>聆聽句子：</strong>안녕하세요. 저는 한국어를 공부하고 있어요.</div>
+        <div><strong>中文翻譯：</strong>你好。我正在學韓語。</div>
+      </div>
+      <div class="transcript-toggle">
+        <button class="quiz-btn secondary" id="toggleTranscriptBtn">顯示 / 隱藏字幕</button>
+      </div>
+      <div class="transcript-panel" id="transcriptPanel" style="display:none;">
+        <div class="transcript-text" id="transcriptText">
+          <span data-word-index="0">안녕하세요.</span>
+          <span data-word-index="1">저는</span>
+          <span data-word-index="2">한국어를</span>
+          <span data-word-index="3">공부하고</span>
+          <span data-word-index="4">있어요.</span>
+        </div>
+        <div class="transcript-hint">播放時單字會依序亮起，方便對照聽力內容。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SRS / Review Teaser -->
+  <div class="srs-teaser">
+    <h3>今日複習待辦</h3>
+    <p>還有 8 張卡片等你複習（間隔重複系統）</p>
+    <button class="action-btn primary" style="margin-top:12px; padding:14px 32px; font-size:1.05rem;">
+      開始複習
+    </button>
+  </div>
+
+  <!-- Footer -->
+  <footer class="page-footer">
+    <div class="footer-content">
+      <p>© 2026 K-City. All rights reserved.</p>
+      <p>Learn Korean through building your virtual Seoul!</p>
+    </div>
+  </footer>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <a href="file:///Users/gankim/Downloads/kim525.github.io-main/index.html" class="nav-item">
+      <div class="nav-icon">🏠</div>
+      <div>首頁</div>
+    </a>
+    <a href="file:///Users/gankim/Downloads/kim525.github.io-main/vocab.html" class="nav-item active">
+      <div class="nav-icon">📚</div>
+      <div>詞彙</div>
+    </a>
+    <a href="file:///Users/gankim/Downloads/kim525.github.io-main/Stats.html" class="nav-item">
+      <div class="nav-icon">📊</div>
+      <div>統計</div>
+    </a>
+    <a href="file:///Users/gankim/Downloads/kim525.github.io-main/StudyHub.html" class="nav-item">
+      <div class="nav-icon">🔌</div>
+      <div>IoT</div>
+    </a>
+    <a href="file:///Users/gankim/Downloads/kim525.github.io-main/Resources.html" class="nav-item">
+      <div class="nav-icon">🌐</div>
+      <div>資源</div>
+    </a>
+    <a href="file:///Users/gankim/Downloads/kim525.github.io-main/Community.html" class="nav-item">
+      <div class="nav-icon">👥</div>
+      <div>社區</div>
+    </a>
+  </nav>
+
+</div>
+
+<script>
+  // Quiz Data
+  const quizData = [
+    {
+      type: 'mcq',
+      question: 'What does "안녕하세요" mean?',
+      options: ['Hello', 'Goodbye', 'Thank you', 'Sorry'],
+      correct: 0
+    },
+    {
+      type: 'fill-blank',
+      question: 'Complete the sentence: "저는 ___ 학생입니다." (I am a student.)',
+      blank: '한국어',
+      hint: 'Korean language'
+    },
+    {
+      type: 'mcq',
+      question: 'How do you say "Thank you" in Korean?',
+      options: ['안녕하세요', '감사합니다', '실례합니다', '미안합니다'],
+      correct: 1
+    },
+    {
+      type: 'matching',
+      question: 'Match the Korean words with their English meanings:',
+      pairs: [
+        { korean: '학교', english: 'School' },
+        { korean: '음식', english: 'Food' },
+        { korean: '가족', english: 'Family' },
+        { korean: '친구', english: 'Friend' }
+      ]
+    },
+    {
+      type: 'fill-blank',
+      question: 'Complete the greeting: "___ 하세요!" (Good morning!)',
+      blank: '좋은아침',
+      hint: 'Good morning'
+    },
+    {
+      type: 'mcq',
+      question: 'How do you ask "What do you recommend?" when ordering food in Korean?',
+      options: ['뭐 먹을래요?', '뭐가 맛있어요?', '여기 뭐예요?', '주문할게요'],
+      correct: 1
+    },
+    {
+      type: 'fill-blank',
+      question: 'Complete the sentence: "저는 ___ 주세요." (I would like to order bibimbap.)',
+      blank: '비빔밥',
+      hint: 'Bibimbap (拌飯)'
+    },
+    {
+      type: 'mcq',
+      question: 'What does "메뉴판 주세요" mean?',
+      options: ['Please bring the bill', 'Please give me the menu', 'I want to order', 'This is delicious'],
+      correct: 1
+    },
+    {
+      type: 'matching',
+      question: 'Match ordering phrases in Korean restaurant situations:',
+      pairs: [
+        { korean: '주문할게요', english: 'I will order' },
+        { korean: '계산서 주세요', english: 'Please bring the bill' },
+        { korean: '매워요', english: 'It is spicy' },
+        { korean: '한테이블이요', english: 'Table for one' }
+      ]
+    },
+    {
+      type: 'mcq',
+      question: 'How do you say "Delicious!" in Korean when eating?',
+      options: ['맛있어요', '배부어요', '안 먹을래요', '뭐예요'],
+      correct: 0
+    },
+    {
+      type: 'fill-blank',
+      question: 'Complete: "저는 ___ 좋아해요." (I like Korean food.)',
+      blank: '한국음식',
+      hint: 'Korean food'
+    }
+  ];
+
+  // Quiz State
+  let currentQuestionIndex = 0;
+  let score = 0;
+  let timer = 30;
+  let timerInterval;
+  let userAnswers = [];
+  let draggedElement = null;
+
+  // DOM Elements
+  const questionContainer = document.getElementById('questionContainer');
+  const progressFill = document.getElementById('progressFill');
+  const currentQuestionSpan = document.getElementById('currentQuestion');
+  const timerSpan = document.getElementById('timer');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  const quizResults = document.getElementById('quizResults');
+  const finalScoreSpan = document.getElementById('finalScore');
+  const scoreMessage = document.getElementById('scoreMessage');
+  const restartBtn = document.getElementById('restartBtn');
+  const playPauseBtn = document.getElementById('playPauseBtn');
+  const repeatBtn = document.getElementById('repeatBtn');
+  const speedSelect = document.getElementById('speedSelect');
+  const toggleTranscriptBtn = document.getElementById('toggleTranscriptBtn');
+  const transcriptPanel = document.getElementById('transcriptPanel');
+  const transcriptText = document.getElementById('transcriptText');
+  const transcriptWordSpans = transcriptText ? Array.from(transcriptText.querySelectorAll('[data-word-index]')) : [];
+
+  const ttsText = '안녕하세요. 저는 한국어를 공부하고 있어요.';
+  const transcriptWords = ['안녕하세요.', '저는', '한국어를', '공부하고', '있어요.'];
+  const wordPositions = transcriptWords.reduce((positions, word) => {
+    const start = ttsText.indexOf(word, positions.length ? positions[positions.length - 1].end : 0);
+    positions.push({ word, start, end: start + word.length });
+    return positions;
+  }, []);
+
+  let speechUtterance = null;
+  let ttsInterval = null;
+
+  function initQuiz() {
+    currentQuestionIndex = 0;
+    score = 0;
+    timer = 30;
+    userAnswers = [];
+    updateProgress();
+    loadQuestion();
+    startTimer();
+    updateAudioButton();
+    setAudioSpeed();
+  }
+
+  function createUtterance() {
+    speechUtterance = new SpeechSynthesisUtterance(ttsText);
+    speechUtterance.lang = 'ko-KR';
+    speechUtterance.rate = parseFloat(speedSelect.value);
+    speechUtterance.onend = () => {
+      updateAudioButton();
+      clearTranscriptHighlight();
+      clearInterval(ttsInterval);
+    };
+    speechUtterance.onpause = updateAudioButton;
+    speechUtterance.onresume = updateAudioButton;
+    speechUtterance.onboundary = event => {
+      if (event.name === 'word' || event.name === 'sentence') {
+        const activeIndex = wordPositions.findIndex(pos => event.charIndex >= pos.start && event.charIndex < pos.end);
+        transcriptWordSpans.forEach((span, index) => {
+          span.classList.toggle('active', index === activeIndex);
+        });
+      }
+    };
+  }
+
+  function togglePlayPause() {
+    if (!speechSynthesis.speaking) {
+      playSpeech();
+    } else if (speechSynthesis.paused) {
+      speechSynthesis.resume();
+      updateAudioButton();
+    } else {
+      speechSynthesis.pause();
+      updateAudioButton();
+    }
+  }
+
+  function playSpeech() {
+    speechSynthesis.cancel();
+    clearTranscriptHighlight();
+    createUtterance();
+    speechSynthesis.speak(speechUtterance);
+    updateAudioButton();
+    if (transcriptPanel.style.display === 'none') {
+      transcriptPanel.style.display = 'block';
+    }
+  }
+
+  function updateAudioButton() {
+    const icon = speechSynthesis.paused || !speechSynthesis.speaking ? 'play' : 'pause';
+    const label = speechSynthesis.paused || !speechSynthesis.speaking ? '播放' : '暫停';
+    playPauseBtn.innerHTML = `<i class="fas fa-${icon}"></i> ${label}`;
+  }
+
+  function setAudioSpeed() {
+    if (speechUtterance && speechSynthesis.speaking) {
+      speechSynthesis.cancel();
+      playSpeech();
+    }
+  }
+
+  function repeatAudioSection() {
+    speechSynthesis.cancel();
+    playSpeech();
+  }
+
+  function toggleTranscript() {
+    transcriptPanel.style.display = transcriptPanel.style.display === 'none' ? 'block' : 'none';
+  }
+
+  function clearTranscriptHighlight() {
+    transcriptWordSpans.forEach(span => span.classList.remove('active'));
+  }
+
+  function highlightCurrentWord() {
+    // fallback is not needed with SpeechSynthesis boundary events
+  }
+
+  // Initialize Quiz
+
+  // Update Progress Bar
+  function updateProgress() {
+    const progress = ((currentQuestionIndex + 1) / quizData.length) * 100;
+    progressFill.style.width = progress + '%';
+    currentQuestionSpan.textContent = currentQuestionIndex + 1;
+  }
+
+  // Start Timer
+  function startTimer() {
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      timer--;
+      timerSpan.textContent = timer < 10 ? '00:0' + timer : '00:' + timer;
+      
+      if (timer <= 0) {
+        clearInterval(timerInterval);
+        nextQuestion();
+      }
+    }, 1000);
+  }
+
+  // Load Question
+  function loadQuestion() {
+    const question = quizData[currentQuestionIndex];
+    let html = `<div class="question">`;
+    
+    if (question.type === 'mcq') {
+      html += `
+        <div class="question-text">${question.question}</div>
+        <div class="mcq-options">
+          ${question.options.map((option, index) => 
+            `<div class="mcq-option" data-index="${index}">${option}</div>`
+          ).join('')}
+        </div>
+      `;
+    } else if (question.type === 'fill-blank') {
+      html += `
+        <div class="question-text">${question.question}</div>
+        <div class="fill-blank-container">
+          <input type="text" class="blank-input" placeholder="___">
+          <div class="hint-text">${question.hint}</div>
+        </div>
+      `;
+    } else if (question.type === 'matching') {
+      const shuffledEnglish = [...question.pairs].sort(() => Math.random() - 0.5);
+      html += `
+        <div class="question-text">${question.question}</div>
+        <div class="matching-container">
+          <div class="matching-column">
+            ${question.pairs.map(pair => 
+              `<div class="matching-item" data-korean="${pair.korean}" draggable="true">${pair.korean}</div>`
+            ).join('')}
+          </div>
+          <div class="matching-column">
+            ${shuffledEnglish.map(pair => 
+              `<div class="drop-zone" data-english="${pair.english}">${pair.english}</div>`
+            ).join('')}
+          </div>
+        </div>
+      `;
+    }
+    
+    html += `</div>`;
+    questionContainer.innerHTML = html;
+    
+    // Add event listeners
+    if (question.type === 'mcq') {
+      document.querySelectorAll('.mcq-option').forEach(option => {
+        option.addEventListener('click', selectMCQOption);
+      });
+    } else if (question.type === 'fill-blank') {
+      document.querySelector('.blank-input').addEventListener('input', checkFillBlank);
+    } else if (question.type === 'matching') {
+      setupDragAndDrop();
+    }
+    
+    updateButtons();
+  }
+
+  // MCQ Selection
+  function selectMCQOption(e) {
+    const selectedIndex = parseInt(e.target.dataset.index);
+    const correctIndex = quizData[currentQuestionIndex].correct;
+    
+    document.querySelectorAll('.mcq-option').forEach(option => {
+      option.classList.remove('selected', 'correct', 'incorrect');
+    });
+    
+    e.target.classList.add('selected');
+    
+    if (selectedIndex === correctIndex) {
+      e.target.classList.add('correct');
+      score++;
+    } else {
+      e.target.classList.add('incorrect');
+      document.querySelector(`[data-index="${correctIndex}"]`).classList.add('correct');
+    }
+    
+    userAnswers[currentQuestionIndex] = selectedIndex === correctIndex;
+    setTimeout(nextQuestion, 1500);
+  }
+
+  // Fill-in-blank Check
+  function checkFillBlank(e) {
+    const input = e.target;
+    const correctAnswer = quizData[currentQuestionIndex].blank.toLowerCase();
+    const userAnswer = input.value.toLowerCase().trim();
+    
+    input.classList.remove('correct', 'incorrect');
+    
+    if (userAnswer === correctAnswer) {
+      input.classList.add('correct');
+      score++;
+      userAnswers[currentQuestionIndex] = true;
+      setTimeout(nextQuestion, 1500);
+    } else if (userAnswer.length > 0) {
+      input.classList.add('incorrect');
+      userAnswers[currentQuestionIndex] = false;
+    }
+  }
+
+  // Drag and Drop Setup
+  function setupDragAndDrop() {
+    const items = document.querySelectorAll('.matching-item');
+    const dropZones = document.querySelectorAll('.drop-zone');
+    
+    items.forEach(item => {
+      item.addEventListener('dragstart', dragStart);
+      item.addEventListener('dragend', dragEnd);
+    });
+    
+    dropZones.forEach(zone => {
+      zone.addEventListener('dragover', dragOver);
+      zone.addEventListener('drop', drop);
+    });
+  }
+
+  function dragStart(e) {
+    draggedElement = e.target;
+    e.target.classList.add('dragging');
+  }
+
+  function dragEnd(e) {
+    e.target.classList.remove('dragging');
+  }
+
+  function dragOver(e) {
+    e.preventDefault();
+    e.target.classList.add('hover');
+  }
+
+  function drop(e) {
+    e.preventDefault();
+    e.target.classList.remove('hover');
+    
+    if (draggedElement && e.target.classList.contains('drop-zone')) {
+      const korean = draggedElement.dataset.korean;
+      const english = e.target.dataset.english;
+      
+      // Check if match is correct
+      const isCorrect = quizData[currentQuestionIndex].pairs.some(pair => 
+        pair.korean === korean && pair.english === english
+      );
+      
+      if (isCorrect) {
+        draggedElement.classList.add('correct');
+        e.target.classList.add('correct');
+        score++;
+      } else {
+        draggedElement.classList.add('incorrect');
+        e.target.classList.add('incorrect');
+      }
+      
+      draggedElement.draggable = false;
+      e.target.textContent = korean;
+      
+      // Check if all items are matched
+      const allMatched = Array.from(document.querySelectorAll('.drop-zone')).every(zone => 
+        zone.textContent !== zone.dataset.english
+      );
+      
+      if (allMatched) {
+        userAnswers[currentQuestionIndex] = score > currentQuestionIndex; // Simple scoring
+        setTimeout(nextQuestion, 2000);
+      }
+    }
+  }
+
+  // Update Buttons
+  function updateButtons() {
+    prevBtn.disabled = currentQuestionIndex === 0;
+    nextBtn.style.display = currentQuestionIndex === quizData.length - 1 ? 'none' : 'flex';
+    submitBtn.style.display = currentQuestionIndex === quizData.length - 1 ? 'flex' : 'none';
+  }
+
+  // Next Question
+  function nextQuestion() {
+    if (currentQuestionIndex < quizData.length - 1) {
+      currentQuestionIndex++;
+      timer = 30;
+      updateProgress();
+      loadQuestion();
+      startTimer();
+    } else {
+      showResults();
+    }
+  }
+
+  // Previous Question
+  function prevQuestion() {
+    if (currentQuestionIndex > 0) {
+      currentQuestionIndex--;
+      timer = 30;
+      updateProgress();
       loadQuestion();
       startTimer();
     }
   }
+
   // Show Results
   function showResults() {
     clearInterval(timerInterval);
@@ -22,6 +1685,7 @@
     
     scoreMessage.textContent = message;
   }
+
   // Event Listeners
   nextBtn.addEventListener('click', nextQuestion);
   prevBtn.addEventListener('click', prevQuestion);
@@ -36,15 +1700,18 @@
   repeatBtn.addEventListener('click', repeatAudioSection);
   speedSelect.addEventListener('change', setAudioSpeed);
   toggleTranscriptBtn.addEventListener('click', toggleTranscript);
+
   document.querySelectorAll('.play-sound-btn').forEach(button => {
     button.addEventListener('click', () => {
       speakKoreanWord(button.dataset.word);
     });
   });
+
   function getKoreanVoice() {
     const voices = speechSynthesis.getVoices();
     return voices.find(v => v.lang.startsWith('ko')) || voices.find(v => v.name.toLowerCase().includes('korean')) || voices[0];
   }
+
   function speakKoreanWord(word) {
     if (!window.speechSynthesis) return;
     speechSynthesis.cancel();
@@ -55,17 +1722,21 @@
     utterance.rate = 1;
     speechSynthesis.speak(utterance);
   }
+
   // Category filtering functionality
   function initCategoryFilter() {
     const tabButtons = document.querySelectorAll('.tab-btn');
     const flashcards = document.querySelectorAll('.flashcard');
+
     tabButtons.forEach(button => {
       button.addEventListener('click', () => {
         // Remove active class from all tabs
         tabButtons.forEach(btn => btn.classList.remove('active'));
         // Add active class to clicked tab
         button.classList.add('active');
+
         const category = button.textContent;
+
         flashcards.forEach(card => {
           if (category === '全部') {
             card.style.display = 'block';
@@ -77,6 +1748,7 @@
       });
     });
   }
+
   // Initialize quiz when page loads
   document.addEventListener('DOMContentLoaded', function() {
     initCategoryFilter();
@@ -101,5 +1773,7 @@
     }
   });
 </script>
-</body>
-</html>
+
+
+
+</body></html>
