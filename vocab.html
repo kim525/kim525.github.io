@@ -289,7 +289,7 @@
       background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
       height: 100%;
       width: 0%;
-      transition: width 0.3s ease;
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .progress-text {
@@ -300,9 +300,30 @@
     .quiz-timer {
       display: flex;
       align-items: center;
-      font-size: 1.1rem;
-      font-weight: 600;
+      font-size: 1.2rem;
+      font-weight: 700;
       color: var(--primary-color);
+      background: var(--light-color);
+      padding: 8px 16px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+    
+    .quiz-timer.warning {
+      color: #ff9800;
+      background: #fff3e0;
+      animation: pulse 1s infinite;
+    }
+    
+    .quiz-timer.danger {
+      color: #f44336;
+      background: #ffebee;
+      animation: pulse 0.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
     }
     
     .quiz-timer i {
@@ -311,10 +332,17 @@
     
     .question-container {
       margin-bottom: 24px;
+      min-height: 200px;
     }
     
-    .question {
+    .question-container .question {
       margin-bottom: 20px;
+      animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
     .question-text {
@@ -336,29 +364,47 @@
       border-radius: 12px;
       padding: 16px;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       text-align: center;
       font-size: 1rem;
+      transform: scale(1);
     }
     
     .mcq-option:hover {
       border-color: var(--primary-color);
       background: #fff5f5;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     
     .mcq-option.selected {
       border-color: var(--primary-color);
       background: #fff5f5;
+      transform: scale(1.02);
     }
     
     .mcq-option.correct {
       border-color: #4caf50;
       background: #e8f5e9;
+      animation: correctPop 0.4s ease;
     }
     
     .mcq-option.incorrect {
       border-color: #f44336;
       background: #ffebee;
+      animation: shake 0.4s ease;
+    }
+    
+    @keyframes correctPop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
     }
     
     /* Fill-in-blank Styles */
@@ -439,6 +485,8 @@
       text-align: center;
       font-size: 1rem;
       user-select: none;
+      touch-action: none;
+      -webkit-touch-callout: none;
     }
     
     .matching-item:hover {
@@ -468,12 +516,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.2s;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .drop-zone.hover {
       border-color: var(--primary-color);
       background: #fff5f5;
+      transform: scale(1.02);
     }
     
     .quiz-controls {
@@ -481,6 +530,12 @@
       justify-content: space-between;
       align-items: center;
       margin-top: 24px;
+      animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
     .quiz-btn {
@@ -490,7 +545,7 @@
       padding: 12px 20px;
       font-size: 1rem;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       display: flex;
       align-items: center;
       gap: 8px;
@@ -499,6 +554,12 @@
     .quiz-btn:hover:not(:disabled) {
       border-color: var(--primary-color);
       background: #fff5f5;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .quiz-btn:active:not(:disabled) {
+      transform: translateY(0);
     }
     
     .quiz-btn:disabled {
@@ -512,15 +573,38 @@
       border: none;
     }
     
+    .quiz-btn.primary:hover:not(:disabled) {
+      background: #e91e63;
+    }
+    
     .quiz-btn.secondary {
       background: var(--secondary-color);
       color: white;
       border: none;
     }
     
+    .quiz-btn.secondary:hover:not(:disabled) {
+      background: #00bcd4;
+    }
+    
+    .feedback-div {
+      animation: feedbackPop 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    
+    @keyframes feedbackPop {
+      0% { opacity: 0; transform: scale(0.8); }
+      50% { transform: scale(1.05); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    
     .quiz-results {
       text-align: center;
       padding: 24px;
+      animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .quiz-results h3 {
@@ -1205,6 +1289,10 @@
       <div class="nav-icon">👥</div>
       <div>社區</div>
     </a>
+    <a href="chat.html" class="nav-item">
+      <div class="nav-icon">💬</div>
+      <div>聊天</div>
+    </a>
   </nav>
 
 </div>
@@ -1419,9 +1507,17 @@
   // Start Timer
   function startTimer() {
     clearInterval(timerInterval);
+    timerSpan.classList.remove('warning', 'danger');
     timerInterval = setInterval(() => {
       timer--;
       timerSpan.textContent = timer < 10 ? '00:0' + timer : '00:' + timer;
+      
+      if (timer <= 15 && timer > 5) {
+        timerSpan.classList.add('warning');
+      } else if (timer <= 5) {
+        timerSpan.classList.remove('warning');
+        timerSpan.classList.add('danger');
+      }
       
       if (timer <= 0) {
         clearInterval(timerInterval);
@@ -1525,7 +1621,7 @@
   // Fill-in-blank Check
 function checkFillBlank(e) { console.log('deprecated'); }
 
-  // Drag and Drop Setup
+  // Drag and Drop Setup (Mouse + Touch)
   function setupDragAndDrop() {
     const items = document.querySelectorAll('.matching-item');
     const dropZones = document.querySelectorAll('.drop-zone');
@@ -1533,6 +1629,10 @@ function checkFillBlank(e) { console.log('deprecated'); }
     items.forEach(item => {
       item.addEventListener('dragstart', dragStart);
       item.addEventListener('dragend', dragEnd);
+      // Touch events for mobile
+      item.addEventListener('touchstart', touchStart, { passive: false });
+      item.addEventListener('touchmove', touchMove, { passive: false });
+      item.addEventListener('touchend', touchEnd);
     });
     
     dropZones.forEach(zone => {
@@ -1548,6 +1648,65 @@ function checkFillBlank(e) { console.log('deprecated'); }
 
   function dragEnd(e) {
     e.target.classList.remove('dragging');
+  }
+
+  // Touch handlers for mobile
+  let touchStartX, touchStartY;
+  
+  function touchStart(e) {
+    e.preventDefault();
+    draggedElement = e.target;
+    draggedElement.classList.add('dragging');
+    const touch = e.touches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+  }
+  
+  function touchMove(e) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const element = draggedElement;
+    
+    element.style.position = 'fixed';
+    element.style.left = touch.clientX - element.offsetWidth / 2 + 'px';
+    element.style.top = touch.clientY - element.offsetHeight / 2 + 'px';
+    element.style.zIndex = '1000';
+    element.style.opacity = '0.8';
+  }
+  
+  function touchEnd(e) {
+    if (!draggedElement) return;
+    
+    draggedElement.classList.remove('dragging');
+    draggedElement.style.position = '';
+    draggedElement.style.left = '';
+    draggedElement.style.top = '';
+    draggedElement.style.zIndex = '';
+    draggedElement.style.opacity = '';
+    
+    const touch = e.changedTouches[0];
+    const dropZone = document.elementFromPoint(touch.clientX, touch.clientY);
+    
+    if (dropZone && dropZone.classList.contains('drop-zone')) {
+      const korean = draggedElement.dataset.korean;
+      const english = dropZone.dataset.english;
+      
+      const isCorrect = quizData[currentQuestionIndex].pairs.some(pair => 
+        pair.korean === korean && pair.english === english
+      );
+      
+      if (isCorrect) {
+        draggedElement.classList.add('correct');
+        dropZone.classList.add('correct');
+      } else {
+        draggedElement.classList.add('incorrect');
+        dropZone.classList.add('incorrect');
+      }
+      
+      dropZone.textContent = korean;
+    }
+    
+    draggedElement = null;
   }
 
   function dragOver(e) {
@@ -1591,84 +1750,31 @@ function checkFillBlank(e) { console.log('deprecated'); }
     submitBtn.style.display = currentQuestionIndex === quizData.length - 1 ? 'flex' : 'none';
   }
 
-  // Next Question
+  // Next Question - ALWAYS advances immediately
   function nextQuestion() {
-    const question = quizData[currentQuestionIndex];
+    // Check answer for scoring
+    const q = quizData[currentQuestionIndex];
     
-    // For fill-blank, check answer BEFORE advancing
-    if (question.type === 'fill-blank') {
-      const input = document.querySelector('.blank-input');
-      const correctAnswer = question.blank.toLowerCase();
-      const userAnswer = input.value.toLowerCase().trim();
-      
-      // Remove old feedback
-      const oldFeedback = input.parentElement.querySelector('.feedback-div');
-      if (oldFeedback) oldFeedback.remove();
-      
-      const feedbackDiv = document.createElement('div');
-      feedbackDiv.className = 'feedback-div';
-      feedbackDiv.style.cssText = 'margin-top: 12px; padding: 10px; border-radius: 8px; font-size: 0.95rem;';
-      input.parentElement.appendChild(feedbackDiv);
-      
-      if (userAnswer === correctAnswer) {
-        input.classList.add('correct');
-        input.classList.remove('incorrect');
+    if (q.type === 'fill-blank') {
+      const inp = document.querySelector('.blank-input');
+      if (inp && inp.value.toLowerCase().trim() === q.blank.toLowerCase()) {
         score++;
         userAnswers[currentQuestionIndex] = true;
-        feedbackDiv.innerHTML = '<span style="color: #4caf50;">✅ 正確！</span>';
-        // Correct - advance after delay
-        setTimeout(() => {
-          advanceToNext();
-        }, 1500);
-        return;
-      } else if (userAnswer.length > 0) {
-        input.classList.add('incorrect');
-        input.classList.remove('correct');
-        userAnswers[currentQuestionIndex] = false;
-        feedbackDiv.innerHTML = `<span style="color: #f44336;">❌ 正確答案: ${question.blank}</span>`;
-        // WRONG - do NOT advance, let user fix answer
-        return;
-      } else {
-        feedbackDiv.innerHTML = '<span style="color: #ff9800;">⚠️ 請輸入答案</span>';
-        return;
+        inp.classList.add('correct');
+      } else if (inp && inp.value.trim()) {
+        inp.classList.add('incorrect');
       }
     }
     
-    // For matching, check if all correct BEFORE advancing
-    if (question.type === 'matching') {
-      const dropZones = document.querySelectorAll('.drop-zone');
-      const allCorrect = Array.from(dropZones).every(zone => zone.classList.contains('correct'));
-      
-      // Remove old feedback
-      const oldFeedback = questionContainer.querySelector('.feedback-div');
-      if (oldFeedback) oldFeedback.remove();
-      
-      const feedbackDiv = document.createElement('div');
-      feedbackDiv.className = 'feedback-div';
-      feedbackDiv.style.cssText = 'margin-top: 12px; padding: 10px; border-radius: 8px; font-size: 0.95rem;';
-      questionContainer.querySelector('.question').appendChild(feedbackDiv);
-      
-      if (allCorrect) {
+    if (q.type === 'matching') {
+      const zones = document.querySelectorAll('.drop-zone');
+      if (Array.from(zones).every(z => z.classList.contains('correct'))) {
         score++;
         userAnswers[currentQuestionIndex] = true;
-        feedbackDiv.innerHTML = '<span style="color: #4caf50;">✅ 正確！</span>';
-        // All correct - advance after delay
-        setTimeout(() => {
-          advanceToNext();
-        }, 1500);
-        return;
-      } else {
-        feedbackDiv.innerHTML = '<span style="color: #f44336;">❌ 請檢查所有配對</span>';
-        // Not all correct - do NOT advance
-        return;
       }
     }
     
-    // MCQ already handled in selectMCQOption
-    advanceToNext();
-  }
-  
-  function advanceToNext() {
+    // ALWAYS go to next - no checks, no delays
     if (currentQuestionIndex < quizData.length - 1) {
       currentQuestionIndex++;
       timer = 45;
@@ -1679,7 +1785,7 @@ function checkFillBlank(e) { console.log('deprecated'); }
       showResults();
     }
   }
-
+   
   // Previous Question
   function prevQuestion() {
     if (currentQuestionIndex > 0) {

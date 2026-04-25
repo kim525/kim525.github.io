@@ -1,95 +1,304 @@
 <!DOCTYPE html>
 <html lang="zh-HK">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Soulmate AI • 即時練習</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>聊天 — K-City</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  
   <style>
+    :root {
+      --primary-color: #FF6B6B;
+      --secondary-color: #4ECDC4;
+      --dark-color: #2D3047;
+      --light-color: #F7F9FC;
+      --gray-color: #E9ECEF;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'PingFang TC', 'Microsoft JhengHei', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
     body {
-      background: linear-gradient(180deg, #fff0f5 0%, #ffe4e9 50%, #fff5f8 100%);
-      color: #4a4a6a;
-      font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, sans-serif;
+      background-color: var(--light-color);
+      color: var(--dark-color);
+      line-height: 1.6;
       min-height: 100vh;
     }
     
     .mobile-container {
-      max-width: 420px;
+      max-width: 500px;
       margin: 0 auto;
+      background: white;
       min-height: 100vh;
-      box-shadow: 0 0 40px rgba(255, 105, 180, 0.2);
+      box-shadow: 0 0 20px rgba(0,0,0,0.08);
+      position: relative;
     }
     
-    .card {
-      background: rgba(255, 255, 255, 0.9);
-      border: 2px solid #ffb6c1;
-      transition: all 0.3s ease;
-    }
-    .card:hover {
-      border-color: #ff69b4;
-      box-shadow: 0 4px 20px rgba(255, 105, 180, 0.15);
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, var(--primary-color), #ff8e8e);
+      color: white;
+      padding: 20px;
+      text-align: center;
     }
     
-    .selected.polite { background: rgba(255, 182, 193, 0.5) !important; border-color: #ff69b4 !important; }
-    .selected.casual { background: rgba(255, 192, 203, 0.5) !important; border-color: #ff69b4 !important; }
+    .header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
     
-    .glow-btn {
-      background: linear-gradient(135deg, #ff69b4, #ff1493);
-      transition: all 0.3s ease;
+    .header p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      margin-top: 4px;
     }
-    .glow-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+    
+    /* Content */
+    .content {
+      padding: 20px;
     }
-
-    #chatContainer::-webkit-scrollbar { width: 4px; }
-    #chatContainer::-webkit-scrollbar-track { background: rgba(255, 182, 193, 0.2); border-radius: 2px; }
-    #chatContainer::-webkit-scrollbar-thumb { background: rgba(255, 105, 180, 0.3); border-radius: 2px; }
+    
+    .section {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    
+    .section h3 {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 12px;
+    }
+    
+    /* Tone buttons */
+    .tone-btns {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .tone-btn {
+      flex: 1;
+      background: var(--light-color);
+      border: 2px solid var(--gray-color);
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    
+    .tone-btn:hover {
+      border-color: var(--primary-color);
+    }
+    
+    .tone-btn.selected {
+      border-color: var(--primary-color);
+      background: #fff5f5;
+      color: var(--primary-color);
+    }
+    
+    /* Chat messages */
+    .chat-area {
+      min-height: 250px;
+      max-height: 350px;
+      overflow-y: auto;
+      padding: 12px;
+      background: #fafafa;
+      border-radius: 10px;
+    }
+    
+    .chat-msg {
+      margin-bottom: 12px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      max-width: 85%;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .chat-msg.user {
+      background: var(--primary-color);
+      color: white;
+      margin-left: auto;
+      border-bottom-right-radius: 4px;
+    }
+    
+    .chat-msg.ai {
+      background: var(--light-color);
+      color: var(--dark-color);
+      margin-right: auto;
+      border-bottom-left-radius: 4px;
+    }
+    
+    .chat-msg .kr {
+      display: block;
+      margin-top: 4px;
+      font-size: 0.85rem;
+      opacity: 0.85;
+    }
+    
+    .chat-placeholder {
+      text-align: center;
+      color: #999;
+      padding: 60px 20px;
+      font-size: 0.9rem;
+    }
+    
+    /* Input */
+    .input-row {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .text-input {
+      flex: 1;
+      border: 2px solid var(--gray-color);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 0.95rem;
+    }
+    
+    .text-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+    
+    .send-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 20px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .send-btn:hover {
+      background: #e55a5a;
+    }
+    
+    /* Bottom Nav */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+      border-top: 1px solid var(--gray-color);
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.07);
+      z-index: 100;
+    }
+    
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #666;
+      font-size: 0.8rem;
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    
+    .nav-item.active {
+      color: var(--primary-color);
+    }
+    
+    .nav-icon {
+      font-size: 1.7rem;
+      margin-bottom: 5px;
+    }
+    
+    .content-pad {
+      padding-bottom: 80px;
+    }
   </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-0">
-  <div class="mobile-container bg-gradient-to-b from-rose-25 to-pink-50 w-full">
-
-    <!-- Main Content -->
-    <div class="flex-1 pt-8 pb-6 px-5 w-full">
-      <div class="text-center mb-8">
-        <h1 class="text-3xl font-bold mb-2 text-pink-500">即時練習</h1>
-        <p class="text-base text-rose-400">和你的韓國靈魂伴侶一起練習對話</p>
-      </div>
-
-      <!-- Tone Selection -->
-      <div class="card p-4 rounded-2xl mb-5">
-        <h3 class="text-sm font-medium mb-3 text-center text-rose-400">選擇語氣</h3>
-        <div class="flex gap-2 justify-center">
-          <button id="politeBtn" onclick="selectTone('polite')" class="flex-1 bg-pink-100 hover:bg-pink-200 p-2.5 rounded-xl transition border border-pink-200 text-sm">Polite (敬語)</button>
-          <button id="casualBtn" onclick="selectTone('casual')" class="flex-1 bg-pink-100 hover:bg-pink-200 p-2.5 rounded-xl transition border border-pink-200 text-sm">Casual (親密)</button>
+<body>
+  <div class="mobile-container">
+    <div class="header">
+      <h1>💬 聊天</h1>
+      <p>和你的同伴一起練習對話</p>
+    </div>
+    
+    <div class="content content-pad">
+      <div class="section">
+        <h3>選擇語氣</h3>
+        <div class="tone-btns">
+          <button class="tone-btn selected" id="politeBtn" onclick="selectTone('polite')">Polite (敬語)</button>
+          <button class="tone-btn" id="casualBtn" onclick="selectTone('casual')">Casual (親密)</button>
         </div>
       </div>
-
-      <!-- Chat Area -->
-      <div class="card p-4 rounded-2xl mb-5">
-        <div id="chatContainer" class="space-y-2 min-h-64 max-h-64 overflow-y-auto p-2 bg-rose-50/50 rounded-xl">
-          <div class="text-center text-rose-300 py-6 text-sm">開始聊天吧！輸入英文句子，我會告訴你如何用韓文說。</div>
+      
+      <div class="section">
+        <div class="chat-area" id="chatArea">
+          <div class="chat-placeholder">開始聊天吧！輸入英文句子，我會告訴你如何用韓文說。</div>
         </div>
       </div>
-
-      <!-- Input Area -->
-      <div class="card p-3 rounded-2xl">
-        <div class="flex gap-2">
-          <input id="userInput" type="text" 
-                 class="flex-1 bg-white border border-pink-200 rounded-xl p-2.5 text-sm focus:outline-none focus:border-pink-400"
-                 placeholder="輸入英文句子，例如：Hello" />
-          <button onclick="sendMessage()" 
-                  class="glow-btn px-5 py-2.5 font-medium rounded-xl text-white text-sm">
-            送出
-          </button>
+      
+      <div class="section">
+        <div class="input-row">
+          <input type="text" class="text-input" id="userInput" placeholder="輸入英文句子，例如：Hello">
+          <button class="send-btn" onclick="sendMessage()">送出</button>
         </div>
       </div>
     </div>
-
+    
+<nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <div class="nav-icon">🏠</div>
+      <div>首頁</div>
+    </a>
+    <a href="vocab.html" class="nav-item">
+      <div class="nav-icon">📚</div>
+      <div>詞彙</div>
+    </a>
+    <a href="Stats.html" class="nav-item">
+      <div class="nav-icon">📊</div>
+      <div>統計</div>
+    </a>
+    <a href="StudyHub.html" class="nav-item">
+      <div class="nav-icon">🔌</div>
+      <div>IoT</div>
+    </a>
+    <a href="Resources.html" class="nav-item">
+      <div class="nav-icon">🌐</div>
+      <div>資源</div>
+    </a>
+    <a href="save.html" class="nav-item">
+      <div class="nav-icon">💾</div>
+      <div>儲存</div>
+    </a>
+    <a href="Community.html" class="nav-item">
+      <div class="nav-icon">👥</div>
+      <div>社區</div>
+    </a>
+    <a href="chat.html" class="nav-item active">
+      <div class="nav-icon">💬</div>
+      <div>聊天</div>
+    </a>
+  </nav>
   </div>
-
+  
   <script>
     let selectedTone = 'polite';
 
@@ -100,19 +309,18 @@
       "how are you doing": { polite: "어떻게 지내세요?", casual: "어떻게 지내?" },
       "how are u": { polite: "어떻게 지내세요?", casual: "어떻게 지내?" },
       "how r u": { polite: "어떻게 지내세요?", casual: "어떻게 지내?" },
-      "hello how are you": { polite: "안녕하세요, 어떻게 지내세요?", casual: "안녕! 잘 지내? 😊", response: { polite: "안녕하세요, 잘 지내요", casual: "응, 잘 지내! 😊" }, responseZh: { polite: "你好，我很好", casual: "你好，我很好" } },
-      "i am fine": { polite: "잘 지내요", casual: "잘 지내", response: { polite: "다행이에요", casual: "좋아 보여요! 😄" }, responseZh: { polite: "太好了", casual: "太好了" } },
-      "i am fine thank you": { polite: "잘 지내요, 감사합니다", casual: "잘 지내, 고마워", response: { polite: "천만에요", casual: "응, 괜찮아 😊" }, responseZh: { polite: "不客氣", casual: "不客氣" } },
-      "did you eat": { polite: "식사하셨어요?", casual: "밥 먹었어?", response: { polite: "네, 먹었어요", casual: "응, 밥 먹었어! 🍚" }, responseZh: { polite: "是的，我吃過了", casual: "嗯，我吃過了" } },
-      "what did you eat": { polite: "무엇을 드셨어요?", casual: "뭐 먹었어?", response: { polite: "밥을 먹었어요.", casual: "밥 먹었어! 🍚" }, responseZh: { polite: "我吃了飯。", casual: "我吃了飯！" } },
-      "have you eaten": { polite: "식사하셨어요?", casual: "밥 먹었어?", response: { polite: "네, 먹었어요", casual: "응, 맛있게 먹었어! 🍚" }, responseZh: { polite: "是的，我吃過了", casual: "嗯，吃得很飽" } },
-      "did u eat": { polite: "식사하셨어요?", casual: "밥 먹었어?", response: { polite: "네, 먹었어요", casual: "응, 밥 먹었어! 🍚" }, responseZh: { polite: "是的，我吃過了", casual: "嗯，吃得很飽" } },
-      "what did u eat": { polite: "무엇을 드셨어요?", casual: "뭐 먹었어?", response: { polite: "밥을 먹었어요.", casual: "밥 먹었어! 🍚" }, responseZh: { polite: "我吃了飯。", casual: "我吃了飯！" } },
-      "i ate": { polite: "먹었어요", casual: "먹었어", response: { polite: "맛있게 드셨나요?", casual: "맛있었어? 😋" }, responseZh: { polite: "你吃得開心嗎？", casual: "好吃嗎？" } },
+      "hello how are you": { polite: "안녕하세요, 어떻게 지내세요?", casual: "안녕! 잘 지내?" },
+      "i am fine": { polite: "잘 지내요", casual: "잘 지내", response: { polite: "다행이에요", casual: "좋아 보여요!" }, responseZh: { polite: "太好了", casual: "太好了" } },
+      "i am fine thank you": { polite: "잘 지내요, 감사합니다", casual: "잘 지내, 고마워", response: { polite: "천만에요", casual: "응, 괜찮아" }, responseZh: { polite: "不客氣", casual: "不客氣" } },
+      "did you eat": { polite: "식사하셨어요?", casual: "밥 먹었어?", response: { polite: "네, 먹었어요", casual: "응, 밥 먹었어!" }, responseZh: { polite: "是的，我吃過了", casual: "嗯，我吃過了" } },
+      "what did you eat": { polite: "무엇을 드셨어요?", casual: "뭐 먹었어?" },
+      "have you eaten": { polite: "식사하셨어요?", casual: "밥 먹었어?" },
+      "did u eat": { polite: "식사하셨어요?", casual: "밥 먹었어?" },
+      "i ate": { polite: "먹었어요", casual: "먹었어" },
       "how was your day": { polite: "오늘 하루 어떻게 보내셨어요?", casual: "오늘 하루 어땠어?" },
-      "what are you doing": { polite: "무엇을 하고 계세요?", casual: "뭐 해?", response: { polite: "공부하고 있어요", casual: "공부하고 있어! 📚" }, responseZh: { polite: "我在學習", casual: "我在讀書！" } },
-      "i am studying": { polite: "공부하고 있어요", casual: "공부하고 있어", response: { polite: "열심히 하세요", casual: "화이팅! 💪" }, responseZh: { polite: "請加油", casual: "加油！" } },
-      "lets eat": { polite: "식사합시다", casual: "밥 먹자", response: { polite: "네, 식사합시다", casual: "그래, 밥 먹자! 🍜" }, responseZh: { polite: "好啊，一起吃吧", casual: "好啊，一起吃吧！" } },
+      "what are you doing": { polite: "무엇을 하고 계세요?", casual: "뭐 해?", response: { polite: "공부하고 있어요", casual: "공부하고 있어!" }, responseZh: { polite: "我在學習", casual: "我在讀書！" } },
+      "i am studying": { polite: "공부하고 있어요", casual: "공부하고 있어", response: { polite: "열심히 하세요", casual: "화이팅!" }, responseZh: { polite: "請加油", casual: "加油！" } },
+      "lets eat": { polite: "식사합시다", casual: "밥 먹자", response: { polite: "��, 식사합시다", casual: "그래, 밥 먹자!" }, responseZh: { polite: "好啊，一起吃吧", casual: "好啊！" } },
       "i am hungry": { polite: "배고파요", casual: "배고파" },
       "thank you very much": { polite: "정말 감사합니다", casual: "정말 고마워" },
       "youre welcome": { polite: "천만에요", casual: "별말씀을" },
@@ -128,57 +336,31 @@
       "i miss you": { polite: "그리워요", casual: "그리워" },
       "happy birthday": { polite: "생일 축하합니다", casual: "생일 축하해" },
       "merry christmas": { polite: "메리 크리스마스", casual: "메리 크리스마스" },
-      "thank you": { polite: "감사합니다", casual: "고마워", response: { polite: "천만에요", casual: "별말씀을~ 😊" }, responseZh: { polite: "不客氣", casual: "不客氣" } },
+      "thank you": { polite: "감사합니다", casual: "고마워", response: { polite: "천만에요", casual: "별말씀을~" }, responseZh: { polite: "不客氣", casual: "不客氣" } },
       "thanks": { polite: "감사합니다", casual: "고마워" },
       "good morning": { polite: "좋은 아침이에요", casual: "좋은 아침" },
       "good afternoon": { polite: "좋은 오후예요", casual: "좋은 오후" },
       "good evening": { polite: "좋은 저녁이에요", casual: "좋은 저녁" },
       "good night": { polite: "안녕히 주무세요", casual: "잘 자" },
       "please": { polite: "부탁드려요", casual: "부탁해" },
-      "sorry": { polite: "죄송합니다", casual: "미안해", response: { polite: "괜찮아요", casual: "괜찮아 😊" }, responseZh: { polite: "沒關係", casual: "沒事" } },
+      "sorry": { polite: "죄송합니다", casual: "미안해", response: { polite: "괜찮아요", casual: "괜찮아" }, responseZh: { polite: "沒關係", casual: "沒事" } },
       "excuse me": { polite: "실례합니다", casual: "실례" },
       "yes": { polite: "네", casual: "응" },
       "no": { polite: "아니요", casual: "아니" },
-      "i love you": { polite: "사랑합니다", casual: "사랑해", response: { polite: "저도 사랑합니다", casual: "나도 사랑해 💕" }, responseZh: { polite: "我也愛你", casual: "我也愛你" } },
-      "what is your name": { polite: "이름이 뭐예요?", casual: "이름이 뭐야?", response: { polite: "제 이름은 [이름]이에요", casual: "내 이름은 [이름]이야" }, responseZh: { polite: "我的名字是[名字]。", casual: "我的名字是[名字]。" } },
+      "i love you": { polite: "사랑합니다", casual: "사랑해", response: { polite: "저도 사랑합니다", casual: "나도 사랑해" }, responseZh: { polite: "我也愛你", casual: "我也愛你" } },
+      "what is your name": { polite: "이름이 뭐예요?", casual: "이름이 뭐야?" },
       "what's your name": { polite: "이름이 뭐예요?", casual: "이름이 뭐야?" },
-      "my name is": { polite: "제 이름은", casual: "내 이름은", response: { polite: "만나서 반가워요", casual: "만나서 반가워 😊" }, responseZh: { polite: "很高興認識你", casual: "很高興認識你" } },
-      "nice to meet you": { polite: "만나서 반갑습니다", casual: "만나서 반가워", response: { polite: "저도 만나서 반가워요", casual: "나도 만나서 반가워 😊" }, responseZh: { polite: "我也很高興認識你", casual: "我也很高興認識你" } },
-      "see you later": { polite: "나중에 봐요", casual: "나중에 봐", response: { polite: "네, 나중에 봐요", casual: "응, 나중에 봐! 👋" }, responseZh: { polite: "好，待會見", casual: "好，待會見！" } },
+      "my name is": { polite: "제 이름은", casual: "내 이름은" },
+      "nice to meet you": { polite: "만나서 반갑습니다", casual: "만나서 반가워" },
+      "see you later": { polite: "나중에 봐요", casual: "나중에 봐" },
       "goodbye": { polite: "안녕히 가세요", casual: "안녕", response: { polite: "안녕히 가세요", casual: "안녕~" }, responseZh: { polite: "再見", casual: "拜拜" } },
-      "bye": { polite: "안녕히 가세요", casual: "안녕", response: { polite: "안녕히 가세요", casual: "안녕~" }, responseZh: { polite: "再見", casual: "拜拜" } }
+      "bye": { polite: "안녕히 가세요", casual: "안녕" }
     };
 
     function selectTone(tone) {
       selectedTone = tone;
       document.getElementById('politeBtn').classList.toggle('selected', tone === 'polite');
-      document.getElementById('politeBtn').classList.toggle('polite', tone === 'polite');
       document.getElementById('casualBtn').classList.toggle('selected', tone === 'casual');
-      document.getElementById('casualBtn').classList.toggle('casual', tone === 'casual');
-
-      const messages = [...document.querySelectorAll('#chatContainer > div[data-english]')].reverse();
-      const lastUserMessage = messages.find(div => div.classList.contains('bg-pink-200'));
-      const lastAIMessage = messages.find(div => div.classList.contains('bg-rose-100'));
-      if (lastUserMessage) {
-        const english = lastUserMessage.dataset.english;
-        const translation = translations[english];
-        if (translation) {
-          const korean = translation[selectedTone];
-          const userMessage = `In Korean (${selectedTone === 'polite' ? '敬語' : '親密'}): ${korean}`;
-          const safeUserMessage = escapeHtml(userMessage).replace(/\n/g, '<br>');
-          lastUserMessage.innerHTML = `<div>${escapeHtml(lastUserMessage.dataset.original)}</div><div class="mt-2 text-left text-pink-600 text-sm">${safeUserMessage}</div>`;
-        }
-      }
-      if (lastAIMessage) {
-        const english = lastAIMessage.dataset.english;
-        const translation = translations[english];
-        if (translation) {
-          const aiKorean = translation.response ? translation.response[selectedTone] : "알겠습니다";
-          const aiChinese = translation.responseZh?.[selectedTone] || "";
-          const aiMessage = aiChinese ? `${aiKorean}\n${aiChinese}` : aiKorean;
-          lastAIMessage.innerHTML = escapeHtml(aiMessage).replace(/\n/g, '<br>');
-        }
-      }
     }
 
     function sendMessage() {
@@ -205,67 +387,40 @@
       if (bestMatch) {
         const translation = translations[bestMatch];
         const korean = translation[selectedTone];
-        const userMessage = `In Korean (${selectedTone === 'polite' ? '敬語' : '親密'}): ${korean}`;
-        addMessage('user', input, userMessage, normalizedInput);
+        addMessage('user', input, korean);
 
-        let aiMessage = translation.response ? translation.response[selectedTone] : "알겠습니다";
-        const aiChinese = translation.responseZh?.[selectedTone];
-        if (aiChinese) {
-          aiMessage += `\n${aiChinese}`;
-        }
-        addMessage('ai', aiMessage, '', normalizedInput);
+        let aiText = translation.response ? translation.response[selectedTone] : "알겠습니다";
+        const aiZh = translation.responseZh?.[selectedTone];
+        if (aiZh) aiText += ' ' + aiZh;
+        addMessage('ai', aiText, '');
       } else {
-        addMessage('user', input, "", normalizedInput);
-        addMessage('ai', "抱歉，我還不知道這句話。\nSorry, I don't know that phrase yet. Try something like 'hello' or 'thank you'.", '', normalizedInput);
+        addMessage('user', input, '');
+        addMessage('ai', "抱歉，我還不知道這句話。Try: 'hello', 'thank you', 'how are you'", '');
       }
 
       document.getElementById('userInput').value = '';
-      const chat = document.getElementById('chatContainer');
-      chat.scrollTop = chat.scrollHeight;
+      document.getElementById('chatArea').scrollTop = document.getElementById('chatArea').scrollHeight;
     }
 
-    function escapeHtml(text) {
-      const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
-      return text.replace(/[&<>"']/g, function(m) { return map[m]; });
-    }
-
-    function addMessage(sender, text, detail = '', english = '') {
-      const chatContainer = document.getElementById('chatContainer');
-      const messageDiv = document.createElement('div');
-      messageDiv.className = `p-2.5 rounded-xl max-w-[85%] ${sender === 'user' ? 'bg-pink-200 ml-auto text-right' : 'bg-rose-100 mr-auto'}`;
-      if (sender === 'user' && detail) {
-        const safeText = escapeHtml(text);
-        const safeDetail = escapeHtml(detail).replace(/\n/g, '<br>');
-        messageDiv.innerHTML = `<div>${safeText}</div><div class="mt-1.5 text-left text-pink-600 text-xs">${safeDetail}</div>`;
-        messageDiv.dataset.original = text;
-      } else if (text.includes('\n')) {
-        messageDiv.innerHTML = escapeHtml(text).replace(/\n/g, '<br>');
-      } else {
-        messageDiv.textContent = text;
+    function addMessage(sender, text, korean) {
+      const area = document.getElementById('chatArea');
+      const ph = area.querySelector('.chat-placeholder');
+      if (ph) ph.remove();
+      
+      const div = document.createElement('div');
+      div.className = 'chat-msg ' + sender;
+      div.textContent = text;
+      if (korean) {
+        const kr = document.createElement('span');
+        kr.className = 'kr';
+        kr.textContent = korean;
+        div.appendChild(kr);
       }
-      if (english) {
-        messageDiv.dataset.english = english;
-      }
-      chatContainer.appendChild(messageDiv);
-    }
-
-    selectTone('polite');
-
-    const params = new URLSearchParams(window.location.search);
-    const startPhrase = params.get('phrase');
-    const startTone = params.get('tone');
-    if (startTone === 'polite' || startTone === 'casual') {
-      selectTone(startTone);
-    }
-    if (startPhrase) {
-      document.getElementById('userInput').value = startPhrase;
-      sendMessage();
+      area.appendChild(div);
     }
 
     document.getElementById('userInput').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        sendMessage();
-      }
+      if (e.key === 'Enter') sendMessage();
     });
   </script>
 </body>
